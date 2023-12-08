@@ -1,0 +1,1059 @@
+.global-menu-background {
+  position: absolute;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.global-menu-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  background-color: #323232;
+
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: #ffffff;
+
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: rgba(190,190,190,0.9);
+  vertical-align: top;
+  
+  min-width: 60%;
+  max-width: 80%;
+  z-index: 31;
+
+  box-sizing: border-box;
+}
+
+.global-menu-modal h3 {
+  line-height:2em;
+  font-size: 2em;
+  
+  margin: 0;
+  margin-left: -3.5%;
+  margin-top: -8px;
+  padding: 0;
+
+  background: linear-gradient(#787878, #323232);
+
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: rgba(190,190,190,0.9);
+  width: 105%;
+
+  height: 2em;
+
+  overflow: hidden;
+}
+
+.global-menu-modal .menu-content {
+  padding: 2em;
+}
+
+.global-menu-modal .menu-content.scrollable {
+  max-height: 70vh;
+  overflow: auto;
+  border-radius: 0 0 20px 20px;
+}
+
+.global-menu-x {
+  position: absolute;
+  top: -8px;
+  right: -3.5%;
+  color: #ffffff;
+  line-height:2em;
+  font-size: 2em;
+  padding-right: .5em;
+  padding-left: .5em;
+  margin: 0;
+  cursor: pointer;
+
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: rgba(190,190,190,0.9);
+
+  background: linear-gradient(#787878, #323232);
+}
+
+.global-menu-x:hover {
+  background: #d63333;
+}
+
+.menu-add-note {
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-add-note > .note-option {
+  display: inline-block;
+  width: 9vmin;
+  height: 9vmin;
+  background-size: cover;
+  margin: 0.1vmin;
+  padding: 1vmin;
+  user-select: none;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  text-align: center;
+  vertical-align: center;
+  word-break: break-word;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.menu-add-note > .note-option:hover {
+  opacity: 1;
+}
+
+.menu-add-note .note-reminder {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background-size: cover;
+}
+
+.menu-add-note .note-reminder .note-text {
+  position: absolute;
+  height: 1em;
+  line-height: 10px;
+  width: inherit;
+  color: black;
+  bottom: 15%;
+  padding: 0.1vmin;
+}
+
+.menu-choose-token {
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-choose-token .token-container {
+  display: block;
+  position: sticky;
+  width: 13vmin;
+  height: 13vmin;
+  padding: .5vmin;
+  margin: 0;
+}
+
+.menu-choose-token .token {
+  display: inline-block;
+  width: 12vmin;
+  height: 12vmin;
+  background-size: cover;
+  user-select: none;
+  opacity: 0.7;
+  transition: opacity 0.2s,
+    border 0.2s;
+  cursor: pointer;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  text-shadow:
+    1px 1px 1px #ffffff,
+    -1px 1px 1px #ffffff,
+    -1px -1px 1px #ffffff,
+    1px -1px 1px #ffffff;
+
+  border-radius: 50%;
+}
+
+.menu-choose-token .token:hover {
+  opacity: 1;
+  border: .5vmin solid;
+}
+
+.menu-choose-token .token div {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+
+  transform: perspective(400px);
+}
+
+.menu-choose-token .token .role {
+  background-size: cover;
+  margin: 0;
+  user-select: none;
+}
+
+.menu-choose-token .token .name {
+  font-size: 20px;
+}
+
+.menu-choose-token .token {
+  filter: drop-shadow(0 0 5px #ffffff);
+  border-color: #ffffff;
+}
+
+.menu-choose-token .token.townsfolk {
+  filter: drop-shadow(0 0 5px #1f65ff);
+  border-color: #1f65ff;
+}
+
+.menu-choose-token .token.outsider {
+  filter: drop-shadow(0 0 5px #46d5ff);
+  border-color: #46d5ff;
+}
+
+.menu-choose-token .token.minion {
+  filter: drop-shadow(0 0 5px #ff6900);
+  border-color: #ff6900;
+}
+
+.menu-choose-token .token.demon {
+  filter: drop-shadow(0 0 5px #ce0100);
+  border-color: #ce0100;
+}
+
+.menu-choose-token .token-container:hover {
+  z-index: 32;
+}
+
+.menu-choose-token .token .name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.menu-choose-token .token-container .role-ability {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 108%;
+
+  transform: translateY(-50%);
+
+  width: 30vmin;
+  min-height: 2em;
+
+  border-radius: 10px;
+  border-color: #bebebe;
+  border-style: solid;
+  border-width: 4px;
+
+  background: linear-gradient(#787878, #323232);
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+
+  z-index: 25;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  opacity: 0;
+
+  transition: opacity 0.2s;
+}
+
+.menu-choose-token .token:hover + .role-ability {
+  opacity: 0.8;
+}
+
+.menu-choose-token .token-container .role-ability:before {
+  pointer-events: none;
+  position: absolute;
+  content: '';
+
+  border: 10px solid transparent;
+
+  width: 0;
+  height: 0;
+  right: 100%;
+
+  border-right-color: #bebebe;
+
+  margin-right: 2px;
+}
+
+/* input styling */
+
+/* Chrome, Safari, Edge, Opera hide arrows */
+.menu-set-timer input::-webkit-outer-spin-button,
+.menu-set-timer input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.menu-set-timer input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.menu-set-timer input {
+  width: 2em;
+  padding: .2em;
+
+  text-align: center;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  background-color: #282828;
+  color: #ffffff;
+
+  margin-left: 10px;
+  margin-right: 10px;
+
+  outline: none;
+}
+
+.menu-set-timer input:focus {
+  border: 4px solid;
+  border-color: #ffffff;
+}
+
+.menu-set-timer span {
+  font-size: 45px;
+}
+
+.menu-set-timer .button {
+  margin: auto;
+  margin-top: 20px;
+  padding: 10px;
+
+  font-size: 1.5em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.menu-set-timer .button:hover {
+  background: #d63333;
+}
+
+.global-menu-modal .menu-roles {
+  padding: 0;
+}
+
+.menu-roles div {
+  padding: 0;
+  margin: 0;
+}
+
+.menu-roles > div {
+  display: flex;
+}
+
+.menu-roles .role-team.townsfolk {
+  background-color: #1f65ff;
+}
+
+.menu-roles .role-team.outsider {
+  background-color: #46d5ff;
+}
+
+.menu-roles .role-team.minion {
+  background-color: #ff6900;
+}
+
+.menu-roles .role-team.demon {
+  background-color: #ce0100;
+}
+
+.menu-roles .role-team {
+  width: 5%;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-roles .role-team h4 {
+  transform: rotate(270deg);
+  transform-origin: center;
+
+  text-transform: uppercase;
+
+  margin: 0;
+  padding: 0;
+}
+
+.menu-roles ul {
+  width: 95%;
+
+  list-style: none;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+.menu-roles li {
+  width: 50%;
+
+  margin: 0;
+  padding: 5px;
+
+  display: flex;
+  align-items: center;
+
+  background: linear-gradient(#121212, #323232);
+  box-sizing: border-box;
+}
+
+.menu-roles .role-icon {
+  width: 4em;
+  height: 4em;
+
+  background-size: cover;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  position: relative;
+}
+
+.menu-roles .role-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+
+  padding: 0;
+  margin: 5px;
+
+  font-size: .8em;
+  flex-grow: 1;
+}
+
+.menu-roles .role-desc span {
+  display: block;
+
+  font-size: 1em;
+
+  text-align: left;
+}
+
+.menu-roles .townsfolk .role-name {
+  color: #1f65ff;
+}
+
+.menu-roles .outsider .role-name {
+  color: #46d5ff;
+}
+
+.menu-roles .minion .role-name {
+  color: #ff6900;
+}
+
+.menu-roles .demon .role-name {
+  color: #ce0100;
+}
+
+.menu-night-order {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.menu-night-order div {
+  padding: 0;
+  margin: 0;
+}
+
+.menu-night-order .night-order {
+  width: auto;
+}
+
+.menu-night-order .night-order h4 {
+  margin: 0;
+  padding: 0;
+
+  padding-left: 1em;
+  padding-right: 1em;
+
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.menu-night-order .night-order ul {
+
+  list-style: none;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+
+  flex-grow: 0;
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  margin: 0;
+  padding: 0;
+
+  margin-left: 1em;
+  margin-right: 1em;
+
+  box-sizing: border-box;
+}
+
+.menu-night-order .night-order li {
+  width: 100%;
+
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+
+  padding-left: 1em;
+  padding-right: 1em;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(#121212, #323232);
+}
+
+.menu-night-order .night-order li:first-child {
+  border-radius: 20px 20px 0 0;
+}
+
+.menu-night-order .night-order li:last-child {
+  border-radius: 0 0 20px 20px;
+}
+
+.menu-night-order .first li {
+  flex-direction: row-reverse;
+}
+
+.menu-night-order .role-icon {
+  width: 5vmin;
+  height: 5vmin;
+
+  background-size: cover;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  position: relative;
+}
+
+.menu-night-order .role-name {
+  font-size: 1em;
+  align-self: stretch;
+  display: inline-flex;
+
+  justify-content: center;
+
+  flex-direction: column;
+}
+
+.menu-night-order .townsfolk .role-name {
+  color: #1f65ff;
+}
+
+.menu-night-order .outsider .role-name {
+  color: #46d5ff;
+}
+
+.menu-night-order .minion .role-name {
+  color: #ff6900;
+}
+
+.menu-night-order .demon .role-name {
+  color: #ce0100;
+}
+
+.menu-night-order .first .role-name {
+  border-right: 4px solid;
+  padding-right: 8px;
+  text-align: right;
+  align-items: end;
+}
+
+.menu-night-order .other .role-name {
+  border-left: 4px solid;
+  padding-left: 8px;
+  text-align: left;
+  align-items: start;
+}
+
+.menu-night-order .role-name .role-players {
+  color: #ffffff;
+  font-size: .7em;
+  font-style: italic;
+}
+
+.menu-night-order .role-reminder {
+  position: fixed;
+  bottom: 1%;
+  left: 5%;
+
+  width: 90%;
+
+  padding: 10px;
+
+  background: linear-gradient(#121212, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  text-align: left;
+
+  z-index: 32;
+}
+
+.menu-night-order li:hover .role-reminder {
+  opacity: 0.9;
+}
+
+.menu-setup-roles {
+  padding: 0;
+}
+
+.menu-setup-roles > div {
+  width: 100%;
+  padding: 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+
+  background: linear-gradient(#121212, #323232);
+}
+
+.menu-setup-roles .role-count {
+  width: 2em;
+  height: 2em;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  font-size: 4vmin;
+  line-height: 2em;
+
+  border: 4px solid;
+  border-radius: 50%;
+}
+
+.menu-setup-roles .townsfolk .role-count {
+  filter: drop-shadow(0 0 5px #1f65ff);
+  color: #1f65ff;
+  border-color: #1f65ff;
+}
+
+.menu-setup-roles .outsider .role-count {
+  filter: drop-shadow(0 0 5px #46d5ff);
+  color: #46d5ff;
+  border-color: #46d5ff;
+}
+
+.menu-setup-roles .minion .role-count {
+  filter: drop-shadow(0 0 5px #ff6900);
+  color: #ff6900;
+  border-color: #ff6900;
+}
+
+.menu-setup-roles .demon .role-count {
+  filter: drop-shadow(0 0 5px #ce0100);
+  color: #ce0100;
+  border-color: #ce0100;
+}
+
+
+.menu-setup-roles .role-list {
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-grow: 1;
+}
+
+.menu-setup-roles .token-container {
+  display: block;
+  position: sticky;
+  width: 10vmin;
+  height: 10vmin;
+  padding: .5vmin;
+  margin: 0;
+}
+
+.menu-setup-roles .token {
+  display: inline-block;
+  width: 9vmin;
+  height: 9vmin;
+  background-size: cover;
+  user-select: none;
+  opacity: 0.6;
+  transition: opacity 0.2s,
+    border 0.2s;
+  cursor: pointer;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  text-shadow:
+    1px 1px 1px #ffffff,
+    -1px 1px 1px #ffffff,
+    -1px -1px 1px #ffffff,
+    1px -1px 1px #ffffff;
+
+  border-radius: 50%;
+}
+
+.menu-setup-roles .selected .token {
+  opacity: 1;
+}
+
+.menu-setup-roles .token:hover {
+  border: .5vmin solid;
+}
+
+.menu-setup-roles .token div {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+
+  transform: perspective(400px);
+}
+
+.menu-setup-roles .token .role {
+  background-size: cover;
+  margin: 0;
+  user-select: none;
+}
+
+.menu-setup-roles .token .name {
+  font-size: 20px;
+}
+
+.menu-setup-roles .token.townsfolk {
+  filter: drop-shadow(0 0 5px #1f65ff);
+  border-color: #1f65ff;
+}
+
+.menu-setup-roles .token.outsider {
+  filter: drop-shadow(0 0 5px #46d5ff);
+  border-color: #46d5ff;
+}
+
+.menu-setup-roles .token.minion {
+  filter: drop-shadow(0 0 5px #ff6900);
+  border-color: #ff6900;
+}
+
+.menu-setup-roles .token.demon {
+  filter: drop-shadow(0 0 5px #ce0100);
+  border-color: #ce0100;
+}
+
+.menu-setup-roles .token-container:hover {
+  z-index: 32;
+}
+
+.menu-setup-roles .token .name {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.menu-setup-roles .token-container .warning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ce0100;
+  font-size: 4vmin;
+  z-index: 32;
+}
+
+.menu-setup-roles .token-container .role-ability {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 108%;
+
+  transform: translateY(-50%);
+
+  width: 30vmin;
+  min-height: 2em;
+
+  border-radius: 10px;
+  border-color: #bebebe;
+  border-style: solid;
+  border-width: 4px;
+
+  background: linear-gradient(#787878, #323232);
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+
+  z-index: 25;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  opacity: 0;
+
+  transition: opacity 0.2s;
+}
+
+.menu-setup-roles .token:hover + .role-ability {
+  opacity: 0.8;
+}
+
+.menu-setup-roles .token-container .role-ability:before {
+  pointer-events: none;
+  position: absolute;
+  content: '';
+
+  border: 10px solid transparent;
+
+  width: 0;
+  height: 0;
+  right: 100%;
+
+  border-right-color: #bebebe;
+
+  margin-right: 2px;
+}
+
+.menu-setup-roles .setup-warning {
+  width: auto;
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+  color: #ce0100;
+  font-size: 4vmin;
+  z-index: 32;
+
+  background: none;
+}
+
+.menu-setup-roles .setup-warning span {
+  pointer-events: none;
+  position: absolute;
+  right: 140%;
+
+  width: 60vmin;
+  min-height: 2em;
+
+  border-radius: 10px;
+  border-color: #bebebe;
+  border-style: solid;
+  border-width: 4px;
+
+  background: linear-gradient(#787878, #323232);
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.5em;
+  color: #ffffff;
+
+  z-index: 25;
+
+  padding: .5em;
+
+  opacity: 0;
+
+  transition: opacity 0.2s;
+}
+
+.menu-setup-roles .setup-warning:hover span {
+  opacity: 0.9;
+}
+
+.menu-setup-roles .setup-warning span:before {
+  pointer-events: none;
+  position: absolute;
+  content: '';
+
+  border: 10px solid transparent;
+
+  width: 0;
+  height: 0;
+  left: 100%;
+  top: 50%;
+
+  border-left-color: #bebebe;
+
+  margin-right: 2px;
+}
+
+.menu-setup-roles .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 1em;
+
+  background: none;
+}
+
+.menu-setup-roles .button {
+  margin: 10px;
+  padding: 10px;
+
+  font-size: 1.5em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.menu-setup-roles .button:hover {
+  background: #d63333;
+}
+
+.menu-voting-history table {
+  width: 100%;
+  border-spacing: 0px;
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+}
+
+.menu-voting-history th {
+  border-bottom: 4px solid;
+  border-color: rgba(190,190,190,0.7);
+  padding: 5px;
+}
+
+.menu-voting-history td {
+  padding: 5px;
+}
+
+.menu-voting-history tr {
+  background: linear-gradient(#121212, #323232);
+}
+
+.menu-voting-history thead th:first-child {
+  border-radius: 20px 0 0 0;
+}
+
+.menu-voting-history thead th:last-child {
+  border-radius: 0 20px 0 0;
+}
+
+.menu-voting-history tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 20px;
+}
+
+.menu-voting-history tbody tr:last-child td:last-child {
+  border-radius: 0 0 20px 0;
+}
+
+.menu-edition-select {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-edition-select .edition-option {
+  box-sizing: border-box;
+  width: 30%;
+  padding-top: 15%;
+  background-position: 50%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.menu-edition-select .edition-option span {
+  text-shadow:
+    1px 1px 1px #000000,
+    -1px 1px 1px #000000,
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000;
+}
+
+.menu-edition-select .edition-option:hover span {
+  color: #d63333;
+}
+
+.menu-custom-edition .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 1em;
+
+  background: none;
+}
+
+.menu-custom-edition .button {
+  margin: 10px;
+  padding: 10px;
+
+  font-size: 1.5em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.menu-custom-edition .button:hover {
+  background: #d63333;
+}

@@ -1,0 +1,393 @@
+.town ul > li {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: 0s;
+  transition-delay: 0s;
+  transition-timing-function: linear;
+  pointer-events: none;
+}
+
+.town ul > li:hover {
+  z-index: 25 !important;
+}
+
+.player {
+  display: block;
+  width: inherit;
+  height: inherit;
+  text-align: center;
+  text-decoration: none;
+  font-size: 3vmin;
+  pointer-events: auto;
+}
+
+.player .token-container {
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.player .token-container .dead {
+  width: 100%;
+  height: 55%;
+
+  background-size: auto 110%;
+  background-position: center;
+  background-position-y: -10px;
+  background-repeat: no-repeat;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  opacity: 0;
+
+  transform: perspective(400px) scale(1.5);
+
+  transition: transform 0.2s,
+  opacity 0.2s;
+}
+
+.player .token-container .ghost-vote {
+  color: #ffffff;
+  position: absolute;
+  left: 0;
+  
+  font-size: 2vmin;
+}
+
+.player .token-container .my-seat {
+  color: #ffffff;
+  position: absolute;
+  right: 0;
+  
+  font-size: 2vmin;
+}
+
+.player .token-container .my-seat svg {
+  filter: drop-shadow(rgb(0, 0, 0) 0px 0px 3px);
+}
+
+.player .token-container .dead:hover {
+  opacity: 0.6 !important;
+  transform: scale(1) translateY(-5px) !important;
+}
+
+.player .token-container .role-ability {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 30vmin;
+  min-height: 2em;
+
+  border-radius: 10px;
+  border-color: #bebebe;
+  border-style: solid;
+  border-width: 4px;
+
+  background: linear-gradient(#787878, #323232);
+
+  font-family: 'Roboto', sans-serif;
+  font-size: .7em;
+  color: #ffffff;
+
+  z-index: 25;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  opacity: 0;
+
+  transition: opacity 0.2s;
+}
+
+.player .token:hover + .role-ability {
+  opacity: 0.8;
+}
+
+.player .token-container .role-ability:before {
+  pointer-events: none;
+  position: absolute;
+  content: '';
+
+  border: 10px solid transparent;
+
+  width: 0;
+  height: 0;
+  right: 100%;
+
+  margin-right: 2px;
+}
+
+.player .token-container .left.role-ability:before {
+  left: 100%;
+
+  border-left-color: #bebebe;
+}
+
+.player .token-container .left.role-ability {
+  right: 108%;
+}
+
+.player .token-container .right.role-ability:before {
+  right: 100%;
+
+  border-right-color: #bebebe;
+}
+
+.player .token-container .right.role-ability {
+  left: 108%;
+}
+
+.player .token {
+  width: 13vmin;
+  height: 13vmin;
+  background-size: cover;
+  margin: auto;
+  margin-top: 0;
+  pointer-events: auto;
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  border-color: #ffffff;
+  border: .5vmin solid;
+  border-radius: 50%;
+
+  text-shadow:
+    1px 1px 1px #ffffff,
+    -1px 1px 1px #ffffff,
+    -1px -1px 1px #ffffff,
+    1px -1px 1px #ffffff;
+
+
+}
+
+.player .token:hover {
+  transform: scale(1.1);
+}
+
+.player .token.undefined {
+  border-color: #ffffff;
+}
+
+.player .token.townsfolk {
+  border-color: #1f65ff;
+}
+
+.player .token.outsider {
+  border-color: #46d5ff;
+}
+
+.player .token.minion {
+  border-color: #ff6900;
+}
+
+.player .token.demon {
+  border-color: #ce0100;
+}
+
+.player .token div {
+  position: absolute;
+  width: 13vmin;
+  height: 13vmin;
+  transform: perspective(400px);
+}
+
+.player .token .role {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center 30%;
+  margin: 0;
+  user-select: none;
+}
+
+.player .token .name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.player > .label {
+  background-color: rgba(120,120,120,0.7);
+  font-family: 'Roboto', sans-serif;
+  color: rgba(245,245,245,0.7);
+  padding: 5px;
+  left: 0;
+  line-height: 1em;
+  border-radius: 5px;
+  border: 2px solid;
+  border-color: rgba(190,190,190,0.7);
+  font-size: 14px;
+  user-select: none;
+  pointer-events: auto;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  position: absolute;
+  width: inherit;
+  box-sizing: border-box;
+  max-height: 2em;
+}
+
+.player > .top-label {
+  top: -2em;
+}
+
+.player > .bottom-label {
+  bottom: -2em;
+}
+
+.player > .label span {
+  float: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 1em;
+  word-break: break-all;
+}
+
+.player .svg-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  cursor: pointer;
+}
+
+.player .svg-overlay svg {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  top: 17.5%;
+  left: 17.5%;
+  
+  stroke: #ffffff;
+  stroke-width: 15px;
+
+  filter: drop-shadow(rgb(0, 0, 0) 0px 0px 3px);
+
+  opacity: 0;
+
+  transition: opacity 0.2s;
+
+  pointer-events: none;
+}
+
+.player .svg-overlay .hand-up {
+  opacity: 0.5;
+}
+
+.player .svg-overlay:hover .player-nominate {
+  color: #ce0100 !important;
+}
+
+.label > .player-menu {
+  pointer-events: auto;
+  position: absolute;
+  color: rgba(245,245,245,0.7);
+  background-color: rgba(120,120,120,0.9);
+  padding: 0;
+  line-height: 1em;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: rgba(190,190,190,0.7);
+  box-shadow: 0px 8px 16px 0px rgba(255,255,255,255,0.2);
+  right: 0;
+  z-index: 26;
+}
+
+.top-label > .player-menu {
+  top: 2em;
+}
+
+.bottom-label > .player-menu {
+  bottom: 2em;
+}
+
+.label > .player-menu ul {
+  list-style: none;
+}
+
+.label > .player-menu li {
+  pointer-events: auto;
+  color: rgba(245,245,245,0.9);
+  padding: 5px;
+  margin: 0;
+  position: static;
+}
+
+.label > .player-menu li:hover {
+  background-color: rgba(40,40,40,0.3);
+}
+
+.player-note-add {
+  pointer-events: none;
+  position: absolute;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  left: 50%;
+  top: 50%;
+}
+
+.town ul > li:hover .player-note-add {
+  opacity: 1;
+}
+
+.player-note-add .note-transform {
+  transform: translateY(5vmin);
+  transition: transform 0.2s;
+}
+
+.town ul > li:hover .note-transform {
+  transform: translateY(0);
+}
+
+.player-note-add .note-transform > div {
+  display: inline-block;
+  width: 4.8vmin;
+  height: 4.8vmin;
+  padding: 1vmin;
+  background-size: cover;
+  user-select: none;
+
+  text-overflow: ellipsis;
+  font-size: 10px;
+  text-align: center;
+
+  vertical-align: center;
+  word-break: break-all;
+
+  opacity: 0.7;
+
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.player-note-add .note-reminder {
+  position: absolute;
+  left: 0;
+  top:  0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  margin: 0;
+}
+
+.token .role > span {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-size: 100%;
+}

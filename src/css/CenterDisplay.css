@@ -1,0 +1,129 @@
+.center-display {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+
+  padding: 0;
+
+  font-size: 1em;
+  text-align: center;
+
+  user-select: none;
+
+  opacity: 1;
+  
+  transition: transform 0.5s,
+    opacity 0.5s;
+}
+
+.center-content {
+  padding: 1em;
+
+  background-color: rgba(120,120,120,0.7);
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 10px;
+}
+
+.fa-center-display {
+  font-size: 1em;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.center-display span {
+  color: #ffffff;
+  text-shadow:
+    2px 2px 3px #000000,
+    -2px 2px 3px #000000,
+    -2px -2px 3px #000000,
+    2px -2px 3px #000000;
+}
+
+.center-content span {
+  margin-right: 5px;
+}
+
+.center-timer {
+  margin: auto;
+  margin-top: 1em;
+  padding: 1em;
+
+  background-color: rgba(120,120,120,0.7);
+  border-color: rgba(190,190,190,0.7);
+
+  border-radius: 2em;
+
+  width: fit-content;
+}
+
+.center-timer.clickable {
+  cursor: pointer;
+}
+
+.center-timer span {
+  font-size: 2em;
+}
+
+.fa-clock-display {
+  font-size: 2em;
+  margin-left: 5px;
+  margin-right: 5px;
+  stroke-width: 1em;
+  stroke: #000000;
+}
+
+.center-display .button-group {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+
+  transform: translate(-50%);
+
+  width: 200%;
+
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: #ffffff;
+
+  background: none;
+}
+
+.center-display .button {
+  margin: 5px;
+  padding: 10px;
+
+  font-size: .8em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.center-display .button:hover {
+  background: #d63333;
+}

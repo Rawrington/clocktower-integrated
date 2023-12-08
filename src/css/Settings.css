@@ -1,0 +1,168 @@
+.settings-menu {
+  position: absolute;
+  right: 0;
+  top: 10%;
+
+  min-width: 30vmin;
+
+  transform: translateX(100%);
+
+  transition: transform 0.5s;
+
+  background-color: #323232;
+
+  z-index: 29;
+
+  min-height: 5em;
+
+  box-sizing: border-box;
+
+  border-radius: 0 0 0 20px;
+  border-color: rgba(190,190,190,0.7);
+  border-style: solid none solid solid;
+  border-width: 4px;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+
+  padding: 0;
+}
+
+.settings-menu h3 {
+  line-height: 2em;
+  font-size: 2em;
+
+  padding: 0;
+  padding-right: 1em;
+  margin: 0;
+
+  text-align: right;
+
+  background: linear-gradient(#787878, #323232);
+
+  border-color: rgba(190,190,190,0.7);
+  border-style: none none solid none;
+  border-width: 4px;
+
+  text-transform: uppercase;
+}
+
+.settings-menu.settings-open {
+  transform: translateX(0);
+}
+
+.settings-popout {
+  position: absolute;
+  top: -4px;
+  left: -2.5em;
+
+  /* incredibly dumb trick so we dont rely on calc to move it just far enough off that it works? i think? */
+  margin-left: -4px;
+
+  width: 2.5em;
+  height: 2em;
+
+  background: linear-gradient(#787878, #323232);
+
+  color: #ffffff;
+
+  text-align: center;
+  padding: 0;
+
+  line-height: 2em;
+  font-size: 2em;
+
+  border-radius: 20px 0 0 20px;
+  border-color: rgba(190,190,190,0.7);
+  border-style: solid none solid solid;
+  border-width: 4px;
+
+  cursor: pointer;
+}
+
+.settings-content ul {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+.settings-content li {
+  padding: 1em;
+
+  line-height: 1em;
+
+  width: 21em;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.settings-content li:hover {
+  background-color: #d63333;
+}
+
+.settings-content li:not(:last-child) {
+  border-color: rgba(190,190,190,0.7);
+  border-style: none none solid none;
+  border-width: 4px;
+}
+
+.settings-content li:last-child {
+  border-radius: 0 0 0 20px;
+}
+
+.settings-content li .left-setting {
+  display: inline-block;
+
+  width: 15em;
+  margin-right: 2em;
+
+  overflow-wrap: anywhere;
+}
+
+.settings-content li .right-setting {
+  display: inline-block;
+
+  float: right;
+
+  width: 4em;
+  text-align: right;
+}
+
+.settings-content ul.menu-select {
+  position: absolute;
+  right: 100%;
+
+  background-color: #787878;
+
+  border-radius: 0 0 20px 20px;
+  border-color: rgba(190,190,190,0.7);
+  border-style: none solid solid solid;
+  border-width: 4px;
+}
+
+.settings-content ul.menu-select {
+  position: absolute;
+  right: 100%;
+  margin-right: 4px;
+}
+
+.settings-content .menu-select li {
+  width: 1em;
+  height: 1em;
+  background-color: #787878;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-content .menu-select li:last-child {
+  border-radius: 0 0 20px 20px;
+  text-align: center;
+}
+
+.settings-content .menu-select .selected {
+  background-color: #565656;
+}

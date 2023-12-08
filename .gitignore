@@ -42,6 +42,15 @@ build/Release
 node_modules/
 jspm_packages/
 
+# vite builds
+dist
+dist-ssr
+*.local
+
+# sublime text
+*.sublime-project
+*.sublime-workspace
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
