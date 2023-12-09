@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
@@ -147,17 +147,23 @@ function CenterTimer({ timer, privilegeLevel }) {
     }
   }
   else if (timer > Date.now()) {
-    const delay = updateDisplay() ;
-
-    clearTimeout(timerRef.current);
-
-    timerRef.current = setTimeout(() => {
-      updateDisplay();
-    }, Math.ceil(delay) + 1);
+    const delay = updateDisplay();
   }
   else if (displayTime !== '--:--') {
     setDisplayTime('--:--');
   }
+
+  useEffect(() => {
+    if (typeof timer !== 'string' && timer > Date.now()) {
+      const delay = updateDisplay();
+
+      clearTimeout(timerRef.current);
+
+      timerRef.current = setTimeout(() => {
+        updateDisplay();
+      }, Math.ceil(delay) + 1);
+    }
+  }, [displayTime, timer]);
 
   return (
     <>
