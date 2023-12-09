@@ -21,9 +21,9 @@ Currently, feature parity with clocktower.online is being achieved but some cool
 - Blood on the Clocktower is a trademark of Steven Medway and The Pandemonium Institute
 - Night reminders and other auxiliary text written by Ben Finney
 - Iconography by Font Awesome
-- Background image copyright and permission granted by Ryan Maloney
 - Webfonts by Google Fonts and Online Web Fonts
 - Alert sound by [RICHERlandTV](https://freesound.org/people/RICHERlandTV/) from [freesound.org](https://freesound.org)
 - All other images and icons are copyright to their respective owners
+- The [townsquare](https://github.com/bra1n/townsquare/) project by bra1n for inspiration and some code source, including the writing used in this section!
 
 This project is provided free of charge and not affiliated with The Pandemonium Institute in any way.
