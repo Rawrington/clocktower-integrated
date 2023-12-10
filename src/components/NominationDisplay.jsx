@@ -81,7 +81,7 @@ function NominationDisplay() {
   }
 
   const smallHandStyle = {
-    transform: 'rotate(' + getRotation(nomination.nominated.index, gameSize) + 'deg)',
+    transform: 'rotate(' + getRotation(nomination.nominator.index, gameSize) + 'deg)',
     backgroundImage: 'url(' + smallHand + ')',
   };
 
