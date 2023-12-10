@@ -1,0 +1,23 @@
+[
+  {
+    "role": "legion",
+    "type": "selection",
+    "name": "bag-duplicate"
+  },
+  {
+    "role": "riot",
+    "type": "selection",
+    "name": "bag-duplicate"
+  },
+  {
+    "role": "organgrinder",
+    "type": "vote",
+    "name": "hidden"
+  },
+  {
+    "role": "spy",
+    "type": "signal",
+    "name": "grimoire",
+    "time": "night"
+  }
+]

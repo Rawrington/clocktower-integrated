@@ -5,6 +5,7 @@ const initialState = {
   timerSeconds: 0,
   pauseTimerDuringNom: true,
   extendTimerAfterNom: 2,
+  moveOnDiscord: true,
 };
 
 export const settingsSlice = createSlice({

@@ -22,12 +22,6 @@ function AppNetworkGate({ children }) {
   const { sendJsonMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(
     SOCKET_URL,
     {
-      heartbeat: {
-        message: 'ping',
-        returnMessage: 'pong',
-        timeout: 60000,
-        interval: 25000, 
-      },
       filter: (message) => {
         lastMessageTime.current = Date.now();
 

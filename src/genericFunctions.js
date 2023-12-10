@@ -1,6 +1,7 @@
 import standardRoles from './roles.json';
 import fabledJson from './fabled.json';
 import editions from './editions.json';
+import specials from './specials.json';
 
 const cachedRoles = {};
 
@@ -34,6 +35,8 @@ export function getImage(role) {
 
 const cachedTown = {};
 let cachedFabled = [];
+let cachedSpecials = [];
+let cachedJinxes = [];
 const cachedGlobalReminders = {};
 
 export function clearCache() {
@@ -42,6 +45,12 @@ export function clearCache() {
   cachedRoles['custom'] = null;
   cachedGlobalReminders['customScript'] = null;
   cachedFabled = [];
+  cachedSpecials = [];
+  cachedJinxes = [];
+}
+
+export function getSpecial(role, type, name) {
+  return specials.find(special => special.role === role && special.type === type && special.name === name) || cachedSpecials.find(special => special.role === role && special.type === type && special.name === name);
 }
 
 export function getRole(role) {

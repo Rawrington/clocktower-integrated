@@ -12,7 +12,7 @@ import { closeMenu } from '../store/slices/menu';
 import { setNomination, setTransition, setHand } from '../store/slices/nomination';
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
-import { setFabled, setVotingHistory, setAlert } from '../store/slices/others';
+import { setFabled, setVotingHistory, setAlert, setVoiceMembers } from '../store/slices/others';
 
 import { getEdition, clearCache } from '../genericFunctions';
 
@@ -35,6 +35,8 @@ const whitelist = [
   'setVotingHistory',
   'playCountdown',
   'storytellerAlert',
+  'updateVoice',
+  'setVoiceMembers',
 ];
 
 const events = ['mousedown', 'touchstart'];
@@ -184,6 +186,11 @@ function NetworkHandler() {
       alertRef.current = setTimeout(() => {
         dispatch(setAlert(''));
       }, 5000);
+    }
+
+    if (lastJsonMessage.type === 'updateVoice') {
+      console.log(lastJsonMessage.members);
+      dispatch(setVoiceMembers(lastJsonMessage.members));
     }
   });
 

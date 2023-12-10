@@ -18,9 +18,9 @@ import noteBackground from '../assets/reminder.png';
 import customNote from '../assets/reminders/custom.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faX, faTriangleExclamation, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
+import { getSpecial, getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
 
 import standardRoles from '../roles.json';
 import editions from '../editions.json';
@@ -137,7 +137,7 @@ function getPlayerWithBox(state, id) {
   }).find((player) => player.id === id);
 }
 
-function NoteOption({ note, reminder, spawnNote }) {
+export function NoteOption({ note, reminder, spawnNote }) {
   const reminderImage = getImage(reminder);
 
   return (
@@ -146,7 +146,9 @@ function NoteOption({ note, reminder, spawnNote }) {
         style={{ backgroundImage: 'url(' + noteBackground + ')' }}
         className="note-option"
         onClick={() => {
-          spawnNote({ reminder: reminder, text: note });
+          if (spawnNote) {
+            spawnNote({ reminder: reminder, text: note });
+          }
         }}
       >
         {reminder ? (
@@ -415,7 +417,7 @@ function SetTimer({ type }) {
       return
     }
 
-    const mins = ('0' + event.target.value).slice(-2);
+    const mins = ('0' + Number(event.target.value)).slice(-2);
 
     if(Number(mins) > 15) {
       setInputMins(15);
@@ -430,7 +432,7 @@ function SetTimer({ type }) {
       return
     }
 
-    const secs = ('0' + event.target.value).slice(-2);
+    const secs = ('0' + Number(event.target.value)).slice(-2);
 
     if(Number(secs) > 59) {
       setInputSecs(59);
@@ -716,6 +718,7 @@ function SetupMenu({ edition }) {
   const [selectedDemons, setSelectedDemons] = useState(() => {
     return pickRandom(demons, townNumber[playerCount - 5] ? townNumber[playerCount - 5].demon : 0).map(role => role.id);
   });
+  const [sendRolesToPlayers, setSendRolesToPlayers] = useState(true);
 
   function randomizeSetup() {
     setSelectedTownsfolk(pickRandom(townsfolk, townNumber[playerCount - 5] ? townNumber[playerCount - 5].townsfolk : 0).map(role => role.id));
@@ -739,6 +742,9 @@ function SetupMenu({ edition }) {
               <div 
                 key={i}
                 className={'token-container' + (selectedTownsfolk.includes(role.id) ? ' selected' : '')}
+                style={{
+                  height: getSpecial(role.id, 'selection', 'bag-duplicate') && selectedTownsfolk.includes(role.id) && '12vmin',
+                }}
               >
                 {role.setup && selectedTownsfolk.includes(role.id) &&
                   <FontAwesomeIcon className="warning" icon={faTriangleExclamation} />
@@ -757,6 +763,39 @@ function SetupMenu({ edition }) {
                   role={role}
                   description={town.length < 30 && 'right'}
                 />
+                {getSpecial(role.id, 'selection', 'bag-duplicate')  && selectedTownsfolk.includes(role.id) &&
+                  <div className="role-duplicate">
+                    <span
+                      className="role-minus"
+                      onClick={() => {
+                        setSelectedTownsfolk((selectedTownsfolk) => {
+                          const index = selectedTownsfolk.indexOf(role.id);
+
+                          if (index > -1) {
+                            const newSelected = [...selectedTownsfolk];
+
+                            newSelected.splice(index, 1);
+
+                            return newSelected;
+                          }
+
+                          return selectedTownsfolk;
+                        });
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </span>
+                    <span className="role-amount">{ selectedTownsfolk.filter(r => r === role.id).length }</span>
+                    <span 
+                      className="role-plus"
+                      onClick={() => {
+                        setSelectedTownsfolk(selectedTownsfolk => selectedTownsfolk.filter(r => r === role.id).length >= playerCount ? selectedTownsfolk : selectedTownsfolk.concat(role.id));
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                  </div>
+                }
               </div>
             ))}
           </div>
@@ -770,6 +809,9 @@ function SetupMenu({ edition }) {
               <div 
                 key={i}
                 className={'token-container' + (selectedOutsiders.includes(role.id) ? ' selected' : '')}
+                style={{
+                  height: getSpecial(role.id, 'selection', 'bag-duplicate') && selectedOutsiders.includes(role.id) && '12vmin',
+                }}
               >
                 {role.setup && selectedOutsiders.includes(role.id) &&
                   <FontAwesomeIcon className="warning" icon={faTriangleExclamation} />
@@ -788,6 +830,39 @@ function SetupMenu({ edition }) {
                   role={role}
                   description={town.length < 30 && 'right'}
                 />
+                {getSpecial(role.id, 'selection', 'bag-duplicate') && selectedOutsiders.includes(role.id) &&
+                  <div className="role-duplicate">
+                    <span
+                      className="role-minus"
+                      onClick={() => {
+                        setSelectedOutsiders((selectedOutsiders) => {
+                          const index = selectedOutsiders.indexOf(role.id);
+
+                          if (index > -1) {
+                            const newSelected = [...selectedOutsiders];
+
+                            newSelected.splice(index, 1);
+
+                            return newSelected;
+                          }
+
+                          return selectedOutsiders;
+                        });
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </span>
+                    <span className="role-amount">{ selectedOutsiders.filter(r => r === role.id).length }</span>
+                    <span 
+                      className="role-plus"
+                      onClick={() => {
+                        setSelectedOutsiders(selectedOutsiders => selectedOutsiders.filter(r => r === role.id).length >= playerCount ? selectedOutsiders : selectedOutsiders.concat(role.id));
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                  </div>
+                }
               </div>
             ))}
           </div>
@@ -801,6 +876,9 @@ function SetupMenu({ edition }) {
               <div 
                 key={i}
                 className={'token-container' + (selectedMinions.includes(role.id) ? ' selected' : '')}
+                style={{
+                  height: getSpecial(role.id, 'selection', 'bag-duplicate') && selectedMinions.includes(role.id) && '12vmin',
+                }}
               >
                 {role.setup && selectedMinions.includes(role.id) &&
                   <FontAwesomeIcon className="warning" icon={faTriangleExclamation} />
@@ -819,6 +897,39 @@ function SetupMenu({ edition }) {
                   role={role}
                   description={town.length < 30 && 'right'}
                 />
+                {getSpecial(role.id, 'selection', 'bag-duplicate') && selectedMinions.includes(role.id) &&
+                  <div className="role-duplicate">
+                    <span
+                      className="role-minus"
+                      onClick={() => {
+                        setSelectedMinions((selectedMinions) => {
+                          const index = selectedMinions.indexOf(role.id);
+
+                          if (index > -1) {
+                            const newSelected = [...selectedMinions];
+
+                            newSelected.splice(index, 1);
+
+                            return newSelected;
+                          }
+
+                          return selectedMinions;
+                        });
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </span>
+                    <span className="role-amount">{ selectedMinions.filter(r => r === role.id).length }</span>
+                    <span 
+                      className="role-plus"
+                      onClick={() => {
+                        setSelectedMinions(selectedMinions => selectedMinions.filter(r => r === role.id).length >= playerCount ? selectedMinions : selectedMinions.concat(role.id));
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                  </div>
+                }
               </div>
             ))}
           </div>
@@ -832,6 +943,9 @@ function SetupMenu({ edition }) {
               <div 
                 key={i}
                 className={'token-container' + (selectedDemons.includes(role.id) ? ' selected' : '')}
+                style={{
+                  height: getSpecial(role.id, 'selection', 'bag-duplicate') && selectedDemons.includes(role.id) && '12vmin',
+                }}
               >
                 {role.setup && selectedDemons.includes(role.id) &&
                   <FontAwesomeIcon className="warning" icon={faTriangleExclamation} />
@@ -850,19 +964,68 @@ function SetupMenu({ edition }) {
                   role={role}
                   description={town.length < 30 && 'right'}
                 />
+                {getSpecial(role.id, 'selection', 'bag-duplicate') && selectedDemons.includes(role.id) &&
+                  <div className="role-duplicate">
+                    <span
+                      className="role-minus"
+                      onClick={() => {
+                        setSelectedDemons((selectedDemons) => {
+                          const index = selectedDemons.indexOf(role.id);
+
+                          if (index > -1) {
+                            const newSelected = [...selectedDemons];
+
+                            newSelected.splice(index, 1);
+
+                            return newSelected;
+                          }
+
+                          return selectedDemons;
+                        });
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </span>
+                    <span className="role-amount">{ selectedDemons.filter(r => r === role.id).length }</span>
+                    <span 
+                      className="role-plus"
+                      onClick={() => {
+                        setSelectedDemons(selectedDemons => selectedDemons.filter(r => r === role.id).length >= playerCount ? selectedDemons : selectedDemons.concat(role.id));
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                  </div>
+                }
               </div>
             ))}
           </div>
         </div>
+        <div className="setup-checkbox">
+          <input
+            id="send-roles-to-players"
+            type="checkbox"
+            checked={sendRolesToPlayers}
+            className={sendRolesToPlayers ? 'checked' : ''}
+            onChange={() => setSendRolesToPlayers(!sendRolesToPlayers)}
+          />
+          <label
+            htmlFor="send-roles-to-players"
+            className={sendRolesToPlayers ? 'checked' : ''}
+          >
+            Send Roles to players after assignment
+          </label>
+        </div>
         <div className="button-group">
           <div
-            className="button"
+            className={'button' + ((playerCount >= 5 && selectedRoles.length === playerCount) ? '' : ' locked') }
             onClick={() => {
               sendJsonMessage({
                 type: 'assignRoles',
                 myId: me,
                 gameId: gameId,
                 selectedRoles: selectedRoles,
+                sendRolesToPlayers: sendRolesToPlayers,
               });
             }}
           >

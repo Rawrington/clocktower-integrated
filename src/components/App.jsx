@@ -12,6 +12,7 @@ import NominationDisplay from './NominationDisplay';
 import Settings from './Settings';
 import Token from './Token';
 import NetworkHandler from './NetworkHandler';
+import DiscordWakeUp from './DiscordWakeUp';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faCloudMoon, faCloudSun } from '@fortawesome/free-solid-svg-icons';
@@ -35,6 +36,7 @@ function App() {
   return (
     <>
       <GlobalMenus />
+      <DiscordWakeUp />
       <div
         className="town"
         ref={ref}

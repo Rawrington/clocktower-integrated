@@ -1,0 +1,126 @@
+.discord-wake-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 60vmin;
+
+  padding: 10px;
+
+  transform: translate(-50%, -50%);
+  background-color: rgba(50,50,50,0.7);
+
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: #ffffff;
+
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: rgba(190,190,190,0.9);
+  vertical-align: top;
+
+  z-index: 40;
+}
+
+.discord-players {
+  display: flex;
+  width: 100%;
+
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.discord-players > div {
+  width: 50%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: start;
+  justify-content: start;
+
+  text-align: left;
+
+  padding: 10px;
+
+  background: linear-gradient(#121212, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  flex-grow: 1;
+}
+
+.discord-players .reminder-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.reminder-container > .note-option {
+  display: inline-block;
+  width: 6vmin;
+  height: 6vmin;
+  background-size: cover;
+  margin: 0.1vmin;
+  padding: .5vmin;
+  user-select: none;
+  text-overflow: ellipsis;
+  font-size: 8px;
+  text-align: center;
+  vertical-align: center;
+  word-break: break-word;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.reminder-container > .note-option:hover {
+  opacity: 1;
+}
+
+.discord-players .note-reminder {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background-size: cover;
+}
+
+.discord-players .note-reminder .note-text {
+  position: absolute;
+  height: 1em;
+  line-height: 8px;
+  width: inherit;
+  color: black;
+  bottom: 15%;
+  padding: 0.1vmin;
+}
+
+.discord-players .button {
+  margin-top: 10px;
+  padding: 10px;
+
+  font-size: .8em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.discord-players .button:hover {
+  background: #d63333;
+}

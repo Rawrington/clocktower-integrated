@@ -177,6 +177,7 @@ function Settings() {
         }
         {subMenu.type === 'game' &&
           <GameMenu
+            userSettings={userSettings}
             isNight={isNight}
             me={me}
             gameId={gameId}
@@ -238,11 +239,21 @@ function TimerMenu({ userSettings, timerPaused, me, gameId, sendJsonMessage }) {
   );
 }
 
-function GameMenu({ isNight, me, gameId, sendJsonMessage }) {
+function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
   const dispatch = useDispatch();
   
   return (
     <ul>
+      <li
+        onClick={() => {
+          dispatch(updateSettings({
+            moveOnDiscord: !userSettings.moveOnDiscord,
+          }));
+        }}
+      >
+        <span className="left-setting">Move Players on Discord when changing time:</span>
+        <span className="right-setting">{userSettings.moveOnDiscord ? ('[On]') : ('[Off]')}</span>
+      </li>
       <li
         onClick={() => {
           dispatch(setNight(!isNight));
@@ -252,6 +263,7 @@ function GameMenu({ isNight, me, gameId, sendJsonMessage }) {
             myId: me,
             gameId: gameId,
             night: !isNight,
+            discord: userSettings.moveOnDiscord,
           })
         }}
       >
@@ -337,6 +349,18 @@ function SetupMenu({ me, gameId, sendJsonMessage }) {
         }}
       >
         Add Fabled
+      </li>
+      <li
+        onClick={() => {
+          sendJsonMessage({
+            type: 'assignRoles',
+            myId: me,
+            gameId: gameId,
+            sendRolesToPlayers: true,
+          })
+        }}
+      >
+        Send out current roles to players.
       </li>
       <li
         onClick={() => {
