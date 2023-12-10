@@ -29,8 +29,10 @@ const resizeEvents = [
 ]
 
 // write this here because its a mess and i want to easily update it as needed
-function selectPlayerById(state, id) {
-  return state.players.map(player => {
+function selectPlayerById(state, id, storyteller) {
+  const players = storyteller ? state.others.st.players : state.players;
+
+  return players.map(player => {
     return {
       id: player.id,
       name: player.name,
@@ -45,8 +47,8 @@ function selectPlayerById(state, id) {
 }
 
 // if you are reading this i am so sorry, SO SO SORRY, I spilled my spaghetti all over the inline styles
-const PlayerToken = forwardRef(({ order, id, sizing }, ref) => {
-  const player = useSelector(state => selectPlayerById(state, id), shallowEqual);
+const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
+  const player = useSelector(state => selectPlayerById(state, id, storyteller), shallowEqual);
   const privilegeLevel = useSelector(state => state.privilege);
   const nomination = useSelector(state => state.nomination);
   const me = useSelector(state => state.me);
@@ -346,10 +348,12 @@ const PlayerToken = forwardRef(({ order, id, sizing }, ref) => {
             <div className="note-transform">
               <div
                 onClick={() => {
-                  dispatch(setMenu({
-                    menu: 'addNote',
-                    target: player.id,
-                  }));
+                  if (!storyteller) {
+                    dispatch(setMenu({
+                      menu: 'addNote',
+                      target: player.id,
+                    }));
+                  }
                 }}
                 style={{
                   transform: 'translateY(12vmin) rotate(' + -rotation + 'deg)',

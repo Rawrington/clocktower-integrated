@@ -20,7 +20,7 @@ import customNote from '../assets/reminders/custom.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faTriangleExclamation, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { getSpecial, getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
+import { getTravellersNotIn, getSpecial, getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
 
 import standardRoles from '../roles.json';
 import editions from '../editions.json';
@@ -96,10 +96,10 @@ function GlobalMenus() {
         {currentMenu.menu === 'showVotingHistory' &&
           <ShowVotingHistory />
         }
-        {currentMenu.menu === 'setEdition' &&
+        {currentMenu.menu === 'setEdition' && privilegeLevel >= 1 &&
           <EditionMenu />
         }
-        {currentMenu.menu === 'uploadCustomEdition' &&
+        {currentMenu.menu === 'uploadCustomEdition' && privilegeLevel >= 1 &&
           <CustomEdition />
         }
       </div>
@@ -237,7 +237,9 @@ function AddNote({ target, edition }) {
 }
 
 function SetToken({ target, edition, privilegeLevel }) {
-  const roles = getTown(edition);
+  const [travellerMenu, setTravellerMenu] = useState(false);
+
+  const roles = privilegeLevel > 0 ? (travellerMenu ? getTravellersNotIn(edition) : [...getTown(edition, 'traveler'), ...getTown(edition)]) : getTown(edition);
 
   const dispatch = useDispatch();
 
@@ -286,7 +288,9 @@ function SetToken({ target, edition, privilegeLevel }) {
                       player: {
                         id: target,
                         role: role,
-                      }
+                        traveler: (getRole(role) && getRole(role).team === 'traveler') ? true : false,
+                      },
+                      reveal: true,
                     });
                   }
                 }
@@ -305,34 +309,47 @@ function SetToken({ target, edition, privilegeLevel }) {
           <Token
             key={roles.length + 1}
             click={() => {
-                if (target < 0) {
-                  dispatch(setBluff({
-                    id: -(target + 1),
-                    bluff: '',
-                  }));
+              if (target < 0) {
+                dispatch(setBluff({
+                  id: -(target + 1),
+                  bluff: '',
+                }));
+              }
+              else {
+                dispatch(updatePlayer({
+                  id: target,
+                  role: -1,
+                }));
+                if(privilegeLevel > 0) {
+                  sendJsonMessage({
+                    type: 'updatePlayer',
+                    myId: me,
+                    gameId: gameId,
+                    player: {
+                      id: target,
+                      role: -1,
+                    }
+                  });
                 }
-                else {
-                  dispatch(updatePlayer({
-                    id: target,
-                    role: -1,
-                  }));
-                  if(privilegeLevel > 0) {
-                    sendJsonMessage({
-                      type: 'updatePlayer',
-                      myId: me,
-                      gameId: gameId,
-                      player: {
-                        id: target,
-                        role: -1,
-                      }
-                    });
-                  }
-                }
+              }
 
               dispatch(closeMenu());
             }}
           />
         </div>
+        {privilegeLevel > 0 &&
+          <>
+            <div className="break"></div>
+            <div
+              className="button"
+              onClick={() => {
+                setTravellerMenu(!travellerMenu);
+              }}
+            >
+              {travellerMenu ? ('Show Script Roles'):('Show Off Script Travellers')}
+            </div>
+          </>
+        }
       </div>
     </>
   );
@@ -685,7 +702,7 @@ function pickRandom( array, number ) {
 
 // the fact that id have to write a bunch of back and forth functions makes reusing the html here less irritating even though I'd like to avoid it!
 function SetupMenu({ edition }) {
-  const playerCount = useSelector(state => state.players.length);
+  const playerCount = useSelector(state => state.players.filter(player => !getRole(player.role) || !getRole(player.role).team || getRole(player.role).team !== 'traveler').length);
 
   const me = useSelector(state => state.me);
   const gameId = useSelector(state => state.game);

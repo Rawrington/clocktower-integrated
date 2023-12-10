@@ -20,6 +20,10 @@
   vertical-align: top;
 
   z-index: 40;
+
+  cursor: grab;
+
+  user-select: none;
 }
 
 .discord-players {
@@ -52,6 +56,8 @@
   border-color: rgba(190,190,190,0.7);
 
   flex-grow: 1;
+
+  cursor: auto;
 }
 
 .discord-players .reminder-container {

@@ -139,6 +139,37 @@
   justify-content: center;
 }
 
+.menu-choose-token .break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.menu-choose-token .button {
+  margin: 5px;
+  margin-top: 1em;
+  padding: 10px;
+
+  font-size: .8em;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  width: fit-content;
+
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.menu-choose-token .button:hover {
+  background: #d63333;
+}
+
 .menu-choose-token .token-container {
   display: block;
   position: sticky;
@@ -218,6 +249,12 @@
   filter: drop-shadow(0 0 5px #ce0100);
   border-color: #ce0100;
 }
+
+.menu-choose-token .token.traveler {
+  filter: drop-shadow(0 0 5px #cc04ff);
+  border-color: #cc04ff;
+}
+
 
 .menu-choose-token .token-container:hover {
   z-index: 32;

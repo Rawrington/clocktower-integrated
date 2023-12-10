@@ -36,7 +36,9 @@ function App() {
   return (
     <>
       <GlobalMenus />
-      <DiscordWakeUp />
+      <DiscordWakeUp
+        ref={ref} 
+      />
       <div
         className="town"
         ref={ref}
@@ -63,16 +65,29 @@ function App() {
 // small containers to seperate out selector logic - more efficient rerendering!
 const NoteList = forwardRef((props, ref) => {
   const noteList = useSelector(selectNotesList, shallowEqual);
+  const stGrim = useSelector(state => state.others.st);
+  const showStGrim = useSelector(state => state.others.stshow);
 
   return (
     <>
-      {noteList.map((note) => (
-        <DraggableNote
-          key={note}
-          id={note}
-          ref={ref}
-        />
-      ))}
+      { showStGrim && stGrim ? (
+        stGrim.notes.map((note) => (
+          <DraggableNote
+            key={note.id}
+            id={note.id}
+            storyteller={true}
+            ref={ref}
+          />
+        ))
+      ) : (
+        noteList.map((note) => (
+          <DraggableNote
+            key={note}
+            id={note}
+            ref={ref}
+          />
+        ))
+      )}
     </>
   );
 });
@@ -80,6 +95,8 @@ const NoteList = forwardRef((props, ref) => {
 // these wrappers might be unneccesary but i want to avoid checking a bunch of props everytime these change, the main app should basically never rerender that way
 const PlayerList = forwardRef((props, ref) => {
   const playerList = useSelector(selectPlayerList, shallowEqual);
+  const stGrim = useSelector(state => state.others.st);
+  const showStGrim = useSelector(state => state.others.stshow);
 
   return (
     <>
@@ -91,6 +108,7 @@ const PlayerList = forwardRef((props, ref) => {
               order={i}
               id={id}
               sizing={playerList.length}
+              storyteller={showStGrim && stGrim}
               ref={ref}
             />
           ))}

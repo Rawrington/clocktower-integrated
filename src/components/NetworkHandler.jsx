@@ -12,7 +12,7 @@ import { closeMenu } from '../store/slices/menu';
 import { setNomination, setTransition, setHand } from '../store/slices/nomination';
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
-import { setFabled, setVotingHistory, setAlert, setVoiceMembers } from '../store/slices/others';
+import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim } from '../store/slices/others';
 
 import { getEdition, clearCache } from '../genericFunctions';
 
@@ -37,6 +37,7 @@ const whitelist = [
   'storytellerAlert',
   'updateVoice',
   'setVoiceMembers',
+  'storytellerGrim',
 ];
 
 const events = ['mousedown', 'touchstart'];
@@ -191,6 +192,16 @@ function NetworkHandler() {
     if (lastJsonMessage.type === 'updateVoice') {
       console.log(lastJsonMessage.members);
       dispatch(setVoiceMembers(lastJsonMessage.members));
+    }
+
+    if (lastJsonMessage.type === 'storytellerGrim') {
+      if(!lastJsonMessage.players || !lastJsonMessage.notes) {
+        dispatch(clearStorytellerGrim());
+      }
+      else {
+        dispatch(setStorytellerGrim(lastJsonMessage));
+        dispatch(showStorytellerGrim(false));
+      }
     }
   });
 

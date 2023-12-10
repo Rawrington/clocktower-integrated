@@ -6,6 +6,7 @@ const initialState = {
   votingHistory: [],
   alert: '',
   voicemembers: [],
+  stshow: false,
 };
 
 export const othersSlice = createSlice({
@@ -42,9 +43,22 @@ export const othersSlice = createSlice({
     setVoiceMembers: (state, action) => {
       state.voicemembers = action.payload;
     },
+    setStorytellerGrim: (state, action) => {
+      state.st = {};
+      state.st.players = action.payload.players;
+      state.st.notes = action.payload.notes;
+
+      console.log(state.st);
+    },
+    clearStorytellerGrim: (state) => {
+      delete state.st;
+    },
+    showStorytellerGrim: (state, action) => {
+      state.stshow = action.payload;
+    },
   },
 });
 
-export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers } = othersSlice.actions;
+export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers, setStorytellerGrim, clearStorytellerGrim, showStorytellerGrim } = othersSlice.actions;
 
 export default othersSlice.reducer;

@@ -71,6 +71,14 @@ export function getFabled(fabled) {
   return (getFabledList().find((f) => f.id === fabled) || undefined);
 }
 
+export function getTravellersNotIn(edition) {
+  if(typeof edition === 'object') {
+    return standardRoles.filter((r) => r.team === 'traveler').map(r => r.id);
+  }
+
+  return standardRoles.filter((r) => r.team === 'traveler' && r.edition !== edition).map(r => r.id);
+}
+
 let currentCustom = '';
 
 export function getEdition(edition) {

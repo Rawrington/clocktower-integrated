@@ -12,12 +12,16 @@ import '../css/CenterDisplay.css';
 import { selectAliveCounter, selectVoteCount, clearMarked } from '../store/slices/players';
 import { setMenu } from '../store/slices/menu';
 import { setNomination, setNominationsOpen } from '../store/slices/nomination';
+import { showStorytellerGrim } from '../store/slices/others';
+
+import { getRole } from '../genericFunctions'
 
 import townNumber from '../game.json';
 
 function CenterDisplay() {
   const timer = useSelector(state => state.timer);
   const townsize = useSelector(state => state.players.length);
+  const nonTravellers = useSelector(state => state.players.filter(player => !getRole(player.role) || !getRole(player.role).team || getRole(player.role).team !== 'traveler').length);
   const privilegeLevel = useSelector(state => state.privilege);
   const availableVotes = useSelector(selectVoteCount);
   const alivePlayers = useSelector(selectAliveCounter);
@@ -33,7 +37,7 @@ function CenterDisplay() {
         }}
       >
         <div className="center-content">
-          { townsize >= 5 ? (
+          { nonTravellers >= 5 ? (
             <>
               {/* Town Size */}
               <FontAwesomeIcon
@@ -70,7 +74,7 @@ function CenterDisplay() {
                   { color: '#1f65ff' }
                 }
               />
-              <span>{townNumber[townsize - 5].townsfolk}</span>
+              <span>{townNumber[nonTravellers - 5].townsfolk}</span>
               {/* Outsiders */}
               <FontAwesomeIcon
                 icon={faUser}
@@ -79,7 +83,7 @@ function CenterDisplay() {
                   { color: '#46d5ff' }
                 }
               />
-              <span>{townNumber[townsize - 5].outsider}</span>
+              <span>{townNumber[nonTravellers - 5].outsider}</span>
               {/* Minions */}
               <FontAwesomeIcon
                 icon={faUser}
@@ -88,7 +92,7 @@ function CenterDisplay() {
                   { color: '#ff6900' }
                 }
               />
-              <span>{townNumber[townsize - 5].minion}</span>
+              <span>{townNumber[nonTravellers - 5].minion}</span>
               {/* Demon */}
               <FontAwesomeIcon
                 icon={faUser}
@@ -97,10 +101,10 @@ function CenterDisplay() {
                   { color: '#ce0100' }
                 }
               />
-              <span>{townNumber[townsize - 5].demon}</span>
+              <span>{townNumber[nonTravellers - 5].demon}</span>
             </>
           ) : (
-            <span>TOWN NO BIG</span>
+            <span>TOWN NO BIG, Add more players!</span>
           )}
         </div>
         <CenterTimer
@@ -197,6 +201,9 @@ function TopDisplay({ privilegeLevel }) {
   const gameId = useSelector(state => state.game);
   const canNominate = useSelector(state => !!state.players.filter(player => !player.dead && player.id === me).length);
 
+  const stGrim = useSelector(state => !!state.others.st);
+  const showStGrim = useSelector(state => state.others.stshow);
+
   const { sendJsonMessage } = useWebSocket(
     SOCKET_URL,
     {
@@ -269,6 +276,16 @@ function TopDisplay({ privilegeLevel }) {
           }}
         >
           Cancel
+        </div>
+      }
+      {stGrim && 
+        <div
+          className="button"
+          onClick={() => {
+            dispatch(showStorytellerGrim(!showStGrim));
+          }}
+        >
+          { showStGrim ? `Hide Storyteller's Grimoire` : `Show Storyteller's Grimoire` }
         </div>
       }
     </div>
