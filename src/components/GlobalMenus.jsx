@@ -239,7 +239,8 @@ function AddNote({ target, edition }) {
 function SetToken({ target, edition, privilegeLevel }) {
   const [travellerMenu, setTravellerMenu] = useState(false);
 
-  const roles = privilegeLevel > 0 ? (travellerMenu ? getTravellersNotIn(edition) : [...getTown(edition, 'traveler'), ...getTown(edition)]) : getTown(edition);
+  // is not a bluff menu and is storyteller to see travellers
+  const roles = (target >= 0 && privilegeLevel > 0) ? (travellerMenu ? getTravellersNotIn(edition) : [...getTown(edition, 'traveler'), ...getTown(edition)]) : getTown(edition);
 
   const dispatch = useDispatch();
 
@@ -260,7 +261,7 @@ function SetToken({ target, edition, privilegeLevel }) {
   return (
     <>
       <h3>{ target >= 0 ? ('Choose a character for ' + name) : ('Choose a Demon Bluff') }</h3>
-      <div className={'menu-content menu-choose-token ' + (roles.length >= 30 ? ' scrollable' : '')}>
+      <div className={'menu-content menu-choose-token ' + (roles.length > 32 ? ' scrollable' : '')}>
         {roles.map((role, i) => (
           <div 
             key={i}
@@ -298,7 +299,7 @@ function SetToken({ target, edition, privilegeLevel }) {
                 dispatch(closeMenu());
               }}
               role={getRole(role)}
-              description={roles.length < 30 && 'right'}
+              description={roles.length <= 32 && 'right'}
             />
           </div>
         ))}
