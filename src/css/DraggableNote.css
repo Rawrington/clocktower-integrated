@@ -60,7 +60,7 @@
   font-size: 2.8vmin;
   transition: opacity 0.2s;
   cursor: pointer;
-
+  padding: 0.8vmin;
 }
 
 .note-hover-x svg {
@@ -86,11 +86,14 @@
   position: absolute;
   width: inherit;
   color: black;
-  bottom: 15%;
+  top: 70%;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 0.1vmin;
-  font-size: 1.1vmin;
-  line-height: 1.2vmin;
-  height: 1.2vmin;
+  padding-left: 0.8vmin;
+  padding-right: 0.8vmin;
+  font-size: 0.8vmin;
+  font-weight: bold;
+  line-height: 1vmin;
+
+  box-sizing: border-box;
 }

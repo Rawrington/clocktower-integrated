@@ -2,6 +2,7 @@ import standardRoles from './roles.json';
 import fabledJson from './fabled.json';
 import editions from './editions.json';
 import specials from './specials.json';
+import jinxes from './jinxes.json';
 
 const cachedRoles = {};
 
@@ -47,6 +48,14 @@ export function clearCache() {
   cachedFabled = [];
   cachedSpecials = [];
   cachedJinxes = [];
+}
+
+export function getJinxes(edition) {
+  if (typeof edition === 'string') {
+    return [];
+  }
+
+  return cachedJinxes;
 }
 
 export function getSpecial(role, type, name) {
@@ -104,6 +113,48 @@ export function getEdition(edition) {
     if (!cachedRoles['custom']) {
       cachedRoles['custom'] = edition.filter(role => role.id !== '_meta' && typeof role !== 'string' && role.team !== 'fabled');
       cachedFabled = edition.filter(role => role.id !== '_meta' && typeof role !== 'string' && role.team === 'fabled');
+      cachedSpecials = edition.reduce((specialsArray, role) => {
+        if (role.special) {
+          return specialsArray.concat(role.special.map(special => {
+            return {
+              ...special,
+              role: role.id,
+            }
+          }));
+        }
+
+        return specialsArray;
+      }, []);
+      cachedJinxes = edition.reduce((jinxesArray, jinxed) => {
+        if (jinxed.jinxes) {
+          const filteredJinxes = jinxed.jinxes.filter(jinx => edition.some(role => (typeof role === 'string' && jinx.id === role) || (typeof role === 'object' && jinx.id === role.id)));
+
+          if (filteredJinxes.length > 0) {
+            return jinxesArray.concat({
+              id: jinxed.id,
+              jinxes: filteredJinxes.jinxes,
+            });
+          }
+        }
+
+        return jinxesArray;
+      }, []);
+      edition.forEach(role => {
+        if(typeof role === 'string') {
+          const jinxed = jinxes.find(jinx => jinx.id === role);
+
+          if (jinxed) {
+            const filteredJinxes = jinxed.jinxes.filter(jinx => edition.some(role => typeof role === 'string' && jinx.id === role));
+
+            if (filteredJinxes.length > 0) {
+              cachedJinxes = cachedJinxes.concat({
+                id: role,
+                jinxes: filteredJinxes,
+              });
+            }
+          }
+        }
+      });
     }
 
     if (cachedRoles['customScript']) {

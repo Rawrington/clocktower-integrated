@@ -418,6 +418,10 @@
   background-color: #ce0100;
 }
 
+.menu-roles .role-team.jinxed {
+  background-color: #ffe91f;
+}
+
 .menu-roles .role-team {
   width: 5%;
   display: flex;
@@ -432,6 +436,11 @@
   transform-origin: center;
 
   text-transform: uppercase;
+  text-shadow:
+    1px 1px 1px #000000,
+    -1px 1px 1px #000000,
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000;
 
   margin: 0;
   padding: 0;
@@ -511,6 +520,10 @@
 
 .menu-roles .demon .role-name {
   color: #ce0100;
+}
+
+.menu-roles .jinxed .role-name {
+  color: #ffe91f;
 }
 
 .menu-night-order {

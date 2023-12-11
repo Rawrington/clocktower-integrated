@@ -20,7 +20,7 @@ import customNote from '../assets/reminders/custom.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faTriangleExclamation, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { getTravellersNotIn, getSpecial, getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
+import { getJinxes, getTravellersNotIn, getSpecial, getRole, getImage, getTown, getGlobalReminders, getReminders, getEdition, getCurrentTravellersWithRole, getFabled, getFabledList, getEditionImage } from '../genericFunctions';
 
 import standardRoles from '../roles.json';
 import editions from '../editions.json';
@@ -513,6 +513,7 @@ function ShowRoles({ edition }) {
   const outsiders = getTown(edition , 'outsider');
   const minions = getTown(edition , 'minion');
   const demons = getTown(edition , 'demon');
+  const jinxes = getJinxes(edition);
 
   return (
     <>
@@ -538,6 +539,39 @@ function ShowRoles({ edition }) {
           type="demon"
           roles={demons}
         />
+        {jinxes && jinxes.length > 0 &&
+          <div className="jinxed">
+            <div className="role-team jinxed">
+              <h4>Jinxed</h4>
+            </div>
+            <ul>
+              {jinxes.map((jinxed) => (
+                jinxed.jinxes.map((jinx) => (
+                  <li key={jinxed + '_' + jinx}>
+                    <span
+                      className="role-icon"
+                      style={{
+                        backgroundImage: 'url(' + getImage(jinxed.id) + ')'
+                      }}
+                    >
+                    </span>
+                    <span
+                      className="role-icon"
+                      style={{
+                        backgroundImage: 'url(' + getImage(jinx.id) + ')'
+                      }}
+                    >
+                    </span>
+                    <div className="role-desc">
+                      <span className="role-name">{ getRole(jinxed.id).name + ' & ' + getRole(jinx.id).name }</span>
+                      <span className="role-ability">{ jinx.reason }</span>
+                    </div>
+                  </li>
+                ))
+              ))}
+            </ul>
+          </div>
+        }
       </div>
     </>
   );
