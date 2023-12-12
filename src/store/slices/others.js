@@ -7,6 +7,7 @@ const initialState = {
   alert: '',
   voicemembers: [],
   stshow: false,
+  daynumber: 0,
 };
 
 export const othersSlice = createSlice({
@@ -56,9 +57,15 @@ export const othersSlice = createSlice({
     showStorytellerGrim: (state, action) => {
       state.stshow = action.payload;
     },
+    setDayNumber: (state, action) => {
+      state.daynumber = action.payload;
+    },
+    incrementDay: (state) => {
+      state.daynumber = state.daynumber + 1;
+    },
   },
 });
 
-export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers, setStorytellerGrim, clearStorytellerGrim, showStorytellerGrim } = othersSlice.actions;
+export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers, setStorytellerGrim, clearStorytellerGrim, showStorytellerGrim, setDayNumber, incrementDay } = othersSlice.actions;
 
 export default othersSlice.reducer;

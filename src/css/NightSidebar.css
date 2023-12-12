@@ -1,0 +1,229 @@
+.night-sidebar {
+  position: absolute;
+  left: 0;
+
+  width: 60vmin;
+
+  padding: 10px;
+
+  transition: transform 0.5s;
+
+  transform: translateX(-100%);
+
+  background-color: #323232;
+
+  z-index: 29;
+
+  height: 100%;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+
+  padding: 0;
+
+  border-radius: 0 20px 20px 0;
+  border-width: 4px;
+  border-style: solid solid solid none;
+  border-color: rgba(190,190,190,0.9);
+  vertical-align: top;
+
+  user-select: none;
+}
+
+.night-sidebar.night-open {
+  transform: translateX(0);
+}
+
+.night-open-me {
+  position: absolute;
+  left: 100%;
+  bottom: 50%;
+
+  transform-origin: bottom left;
+  transform: rotate(90deg) translateX(-50%) translateY(-4px);
+
+  background: linear-gradient(#787878, #323232);
+
+  border-color: rgba(190,190,190,0.7);
+  border-style: solid solid none solid;
+  border-width: 4px;
+
+  border-radius: 20px 20px 0 0;
+  box-sizing: border-box;
+
+  width: 30vmin;
+  text-align: center;
+}
+
+.night-open-me h3 {
+  margin: 0;
+  padding: 1vmin;
+
+  font-size: 4vmin;
+}
+
+.night-sidebar .night-sidebar-content {
+  overflow: auto;
+  max-height: 100%;
+}
+
+.night-sidebar ul {
+  list-style: none;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+.night-sidebar li {
+  width: 100%;
+
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 1vmin;
+
+  box-sizing: border-box;
+
+  font-size: 3vmin;
+
+  min-height: 9.5vmin;
+
+  background: linear-gradient(#121212, #323232);
+}
+
+.night-sidebar li.demon-bluffs, .night-sidebar li.minion-info {
+  text-align: left;
+  justify-content: start;
+}
+
+.night-sidebar li.new-role {
+  background: none;
+  text-align: center;
+  width: 100%;
+}
+
+.night-sidebar li:first-child {
+  background: none;
+  text-align: center;
+  width: 100%;
+}
+.night-sidebar li:last-child {
+  border-radius: 0 0 20px 0;
+}
+
+.night-sidebar .button {
+  text-align: center;
+
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  border-radius: 10px;
+  background: linear-gradient(#787878, #323232);
+
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: rgba(190,190,190,0.7);
+
+  margin: 0;
+  padding: .5vmin;
+
+  width: 10vmin;
+
+  cursor: pointer;
+}
+
+.night-sidebar .button:hover {
+  background: #d63333;
+}
+
+.night-sidebar .button.locked {
+  background: #d63333 !important;
+  opacity: 0.8;
+  cursor: auto;
+}
+
+.night-sidebar .role-icon {
+  width: 5vmin;
+  height: 5vmin;
+
+  background-size: cover;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  position: relative;
+}
+
+.night-sidebar .player-name {
+  width: 10vmin;
+  overflow: hidden;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.night-sidebar .reminder-container {
+  flex-grow: 1;
+  align-self: stretch;
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: start;
+  width: fit-content;
+}
+
+.night-sidebar .reminder-container > .note-option {
+  display: inline-block;
+  width: 6vmin;
+  height: 6vmin;
+  background-size: cover;
+  margin: 0.1vmin;
+  padding: .5vmin;
+  user-select: none;
+  text-overflow: ellipsis;
+  font-size: 8px;
+  text-align: center;
+  vertical-align: center;
+  word-break: break-word;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.night-sidebar .note-reminder {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  background-size: cover;
+}
+
+.night-sidebar .reminder-container > .note-option:hover {
+  opacity: 1;
+}
+
+.night-sidebar .reminder-container .note-reminder .note-text {
+  position: absolute;
+  height: 1em;
+  line-height: 8px;
+  width: inherit;
+  color: black;
+  bottom: 15%;
+  padding: 0.1vmin;
+  font-size: 1vmin;
+}

@@ -34,7 +34,7 @@
 
   transition: transform 0.5s;
 
-  z-index: 29;
+  z-index: 28;
 
   box-sizing: border-box;
 }
@@ -287,7 +287,7 @@
 
   transition: transform 0.5s;
 
-  z-index: 29;
+  z-index: 28;
 
   box-sizing: border-box;
 }
@@ -474,6 +474,10 @@
   opacity: 0.7;
 
   filter: drop-shadow(rgb(0, 0, 0) 0px 0px 3px);
+}
+
+.day-night-display span {
+  margin-right: 20px;
 }
 
 @keyframes alert {

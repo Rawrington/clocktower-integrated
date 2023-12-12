@@ -67,7 +67,7 @@
   justify-content: center;
 }
 
-.reminder-container > .note-option {
+.discord-players .reminder-container > .note-option {
   display: inline-block;
   width: 6vmin;
   height: 6vmin;
@@ -85,7 +85,7 @@
   cursor: pointer;
 }
 
-.reminder-container > .note-option:hover {
+.discord-players .reminder-container > .note-option:hover {
   opacity: 1;
 }
 

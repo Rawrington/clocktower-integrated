@@ -12,12 +12,13 @@ import { closeMenu } from '../store/slices/menu';
 import { setNomination, setTransition, setHand } from '../store/slices/nomination';
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
-import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim } from '../store/slices/others';
+import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber } from '../store/slices/others';
 
 import { getEdition, clearCache } from '../genericFunctions';
 
 import countdown from '../assets/sounds/countdown.mp3';
 import alert from '../assets/sounds/alert.mp3';
+import timerEndSound from '../assets/sounds/timer.mp3';
 
 const whitelist = [
   'syncGameState',
@@ -38,6 +39,7 @@ const whitelist = [
   'updateVoice',
   'setVoiceMembers',
   'storytellerGrim',
+  'timerEnd',
 ];
 
 const events = ['mousedown', 'touchstart'];
@@ -95,6 +97,7 @@ function NetworkHandler() {
       dispatch(setFabled(lastJsonMessage.fabled));
       dispatch(setGameId(lastJsonMessage.gameId));
       dispatch(setVotingHistory(lastJsonMessage.votingHistory));
+      dispatch(setDayNumber(lastJsonMessage.dayNumber));
 
       if (typeof lastJsonMessage.edition === 'object') {
         getEdition(lastJsonMessage.edition);
@@ -117,6 +120,8 @@ function NetworkHandler() {
           nominating: false,
         }));
       }
+
+      dispatch(setDayNumber(lastJsonMessage.dayNumber));
     }
 
     if (lastJsonMessage.type === 'setEdition') {
@@ -190,7 +195,6 @@ function NetworkHandler() {
     }
 
     if (lastJsonMessage.type === 'updateVoice') {
-      console.log(lastJsonMessage.members);
       dispatch(setVoiceMembers(lastJsonMessage.members));
     }
 
@@ -202,6 +206,22 @@ function NetworkHandler() {
         dispatch(setStorytellerGrim(lastJsonMessage));
         dispatch(showStorytellerGrim(false));
       }
+    }
+
+    if (lastJsonMessage.type === 'timerEnd') {
+      dispatch(setAlert(''));
+
+      setTimeout(() => {
+        dispatch(setAlert('The Timer has finished counting down!'));
+      });
+
+      if (alertRef.current) {
+        clearTimeout(alertRef.current);
+      }
+
+      alertRef.current = setTimeout(() => {
+        dispatch(setAlert(''));
+      }, 5000);
     }
   });
 
@@ -235,7 +255,8 @@ function NetworkHandler() {
 
 function AudioHandler({ messageType, canPlay }) {
   const [ playCountdown, countdownSound ] = useSound(countdown);
-  const [ playAlert, alertSound ] = useSound(alert);
+  const [ playAlert ] = useSound(alert);
+  const [ playTimer ] = useSound(timerEndSound);
 
   useEffect(() => {
     if (canPlay && messageType === 'playCountdown') {
@@ -248,6 +269,10 @@ function AudioHandler({ messageType, canPlay }) {
 
     if (canPlay && messageType === 'storytellerAlert') {
       playAlert();
+    }
+
+    if (canPlay && messageType === 'timerEnd') {
+      playTimer();
     }
 
   });

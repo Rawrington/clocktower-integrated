@@ -247,11 +247,7 @@ export function getGlobalReminders(editionObject) {
     return cachedGlobalReminders[edition];
   }
 
-  let globalReminders = [
-    { reminder: 'good', text: 'Good' },
-    { reminder: 'evil', text: 'Evil' },
-    { reminder: 'outsider', text: 'Outsider' },
-  ];
+  let globalReminders = [];
 
   dataEdition.roles.forEach((role) => {
     const dataRole = getRole(role) ? getRole(role) : getFabled(role);
@@ -269,7 +265,11 @@ export function getGlobalReminders(editionObject) {
 }
 
 export function getReminders(roles, fabled) {
-  let reminders = [];
+  let reminders = [
+    { reminder: 'good', text: 'Good' },
+    { reminder: 'evil', text: 'Evil' },
+    { reminder: 'outsider', text: 'Outsider' },
+  ];
 
   roles.forEach((role) => {
     const dataRole = getRole(role);

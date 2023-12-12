@@ -12,6 +12,7 @@ import NominationDisplay from './NominationDisplay';
 import Settings from './Settings';
 import Token from './Token';
 import NetworkHandler from './NetworkHandler';
+import NightSidebar from './NightSidebar';
 import DiscordWakeUp from './DiscordWakeUp';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -53,6 +54,7 @@ function App() {
         <CenterDisplay />
       </div>
       <Settings />
+      <NightSidebar />
       <Bluffs />
       <Fabled />
       <NightDisplay />
@@ -246,12 +248,15 @@ function Fabled() {
 
 function NightDisplay() {
   const isNight = useSelector(state => state.night);
+  const dayNumber = useSelector(state => state.others.daynumber || 0);
 
   return (
-    <FontAwesomeIcon
-      className="day-night-display"
-      icon={isNight ? faCloudMoon : faCloudSun}
-    />
+    <div className="day-night-display">
+      <span>{isNight ? ('Night ' + dayNumber) : ('Day ' + dayNumber)}</span>
+      <FontAwesomeIcon 
+        icon={isNight ? faCloudMoon : faCloudSun}
+      />
+    </div>
   );
 }
 

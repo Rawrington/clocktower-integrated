@@ -19,5 +19,11 @@
     "type": "signal",
     "name": "grimoire",
     "time": "night"
+  },
+  {
+    "role": "widow",
+    "type": "signal",
+    "name": "grimoire",
+    "time": "night"
   }
 ]

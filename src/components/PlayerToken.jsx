@@ -131,6 +131,12 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   });
   // this works because we wont be scrolling, theres probably a better way to do it? idk
 
+  useEffect(() => {
+    if (playerRef && playerRef.current && playerRef.current.getBoundingClientRect) {
+      handleResize(playerRef.current);
+    }
+  }, [playerRef, playerRef.current])
+
   return (
     <>
       <li style={style}>

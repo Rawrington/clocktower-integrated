@@ -11,6 +11,7 @@ import { updateSettings } from '../store/slices/settings';
 import { setMenu, closeMenu } from '../store/slices/menu';
 import { setNight } from '../store/slices/night';
 import { clearNotes } from '../store/slices/notes';
+import { incrementDay } from '../store/slices/others';
 
 import '../css/Settings.css';
 
@@ -257,6 +258,10 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
       <li
         onClick={() => {
           dispatch(setNight(!isNight));
+
+          if(isNight === false) {
+            dispatch(incrementDay());
+          }
 
           sendJsonMessage({
             type: 'setNight',

@@ -194,6 +194,7 @@ function AddNote({ target, edition }) {
       ...note,
       position: pos,
       id: note.reminder + '_' + nanoid(),
+      globalIndex: getGlobalReminders(edition).findIndex(reminder => reminder.text === note.text && reminder.reminder === note.reminder),
     }));
     // by giving our note a unique indentifier we force less DOM updates to happen, I think, idk React cool im bad....
 
@@ -280,6 +281,7 @@ function SetToken({ target, edition, privilegeLevel }) {
                   dispatch(updatePlayer({
                     id: target,
                     role: role,
+                    firstNight: true,
                   }));
                   if(privilegeLevel > 0) {
                     sendJsonMessage({

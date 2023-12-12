@@ -3,9 +3,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import useWebSocket from 'react-use-websocket';
 import SOCKET_URL from '../socket_config.js';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserGroup, faUsers, faHeartPulse, faCheckToSlot, faClock } from '@fortawesome/free-solid-svg-icons';
-
 import '../css/DiscordWakeUp.css';
 
 import { getRole, getSpecial } from '../genericFunctions';
@@ -95,6 +92,9 @@ const DiscordWakeUp = forwardRef((props, ref) => {
           {curPlayers.map(player => (
             <div key={player.id}>
               <span>{player.name + (getRole(player.role) ? (' the ' + getRole(player.role).name) : '')}</span>
+              {player.firstNight && 
+                <span>It is {player.name}'s first night as their role.</span>
+              }
               <span>Reminder tokens on {player.name}:</span>
               <div className="reminder-container">
                 {mappedNotes.filter(note => note.player === player.id).map(note => (
