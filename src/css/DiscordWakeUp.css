@@ -130,3 +130,14 @@
 .discord-players .button:hover {
   background: #d63333;
 }
+
+.discord-players .note-option > span {
+  display: inline-flex;
+  width: inherit;
+  height: inherit;
+  color: #000000;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3vmin;
+  line-height: 1.3vmin;
+}

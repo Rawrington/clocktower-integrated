@@ -227,3 +227,14 @@
   padding: 0.1vmin;
   font-size: 1vmin;
 }
+
+.night-sidebar .note-option > span {
+  display: inline-flex;
+  width: inherit;
+  height: inherit;
+  color: #000000;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3vmin;
+  line-height: 1.3vmin;
+}

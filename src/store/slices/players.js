@@ -39,6 +39,9 @@ export const playersSlice = createSlice({
         return player;
       });
     },
+    clearPlayerList: (state) => {
+      return initialState;
+    },
     setMarked: (state, action) => {
       return state.map(player => {
         return {
@@ -60,7 +63,7 @@ export const playersSlice = createSlice({
   },
 });
 
-export const { setPlayers, updatePlayer, clearHands, setPlayerList, setMarked, clearMarked } = playersSlice.actions;
+export const { setPlayers, updatePlayer, clearHands, setPlayerList, clearPlayerList, setMarked, clearMarked } = playersSlice.actions;
 
 export function selectPlayerList(state) {
   return state.players.map(player => player.id);

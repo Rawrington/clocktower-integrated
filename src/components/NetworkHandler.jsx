@@ -5,7 +5,7 @@ import useSound from 'use-sound';
 
 import SOCKET_URL from '../socket_config.js'
 
-import { setPlayerList, updatePlayer, setMarked, clearMarked, clearHands } from '../store/slices/players';
+import { setPlayerList, updatePlayer, setMarked, clearMarked, clearHands, clearPlayerList } from '../store/slices/players';
 import { setEdition } from '../store/slices/edition';
 import { setGameId } from '../store/slices/game';
 import { closeMenu } from '../store/slices/menu';
@@ -13,6 +13,7 @@ import { setNomination, setTransition, setHand } from '../store/slices/nominatio
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
 import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber } from '../store/slices/others';
+import { clearNotes } from '../store/slices/notes';
 
 import { getEdition, clearCache } from '../genericFunctions';
 
@@ -89,6 +90,11 @@ function NetworkHandler() {
     setLastRMessage(lastJsonMessage);
 
     if (lastJsonMessage.type === 'syncGameState') {
+      if (lastJsonMessage.firstConnect) {
+        dispatch(clearPlayerList());
+        dispatch(clearNotes());
+      }
+
       dispatch(setPlayerList(lastJsonMessage.players));
       dispatch(setEdition(lastJsonMessage.edition));
       dispatch(setNomination(lastJsonMessage.nomination));

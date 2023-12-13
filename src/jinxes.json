@@ -168,6 +168,10 @@
       {
         "id": "heretic",
         "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Spy ability in addition to their own ability, and learns this."
       }
     ]
   },
@@ -211,6 +215,10 @@
       {
         "id": "heretic",
         "reason": "The Baron might only add 1 Outsider, not 2."
+      },
+      {
+        "id": "plaguedoctor",
+        "reason": " If the Storyteller gains the Baron ability, up to two players become out-of-play Outsiders."
       }
     ]
   },
@@ -240,6 +248,10 @@
       {
         "id": "huntsman",
         "reason": "If the Marionette thinks that they are the Huntsman, the Damsel was added."
+      },
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Demon has a neighbour who is alive and a Townsfolk or Outsider when the Plague Doctor dies, that player becomes an evil Marionette. If there is already an extra evil player, this does not happen."
       }
     ]
   },
@@ -370,6 +382,126 @@
       {
         "id": "heretic",
         "reason": "If the Lleech has poisoned the Heretic then the Lleech dies, the Heretic remains poisoned."
+      }
+    ]
+  },
+  {
+    "id": "organgrinder",
+    "jinxes": [
+      {
+        "id": "butler",
+        "reason": "If the Organ Grinder is causing eyes closed voting, the Butler may raise their hand to vote but their vote is only counted if their master voted too."
+      },
+      {
+        "id": "flowergirl",
+        "reason": "If players' eyes were closed during the nominations, the Flowergirl learns how many times the Demon voted."
+      },
+      {
+        "id": "lilmonsta",
+        "reason": "Votes for the Organ Grinder count if the Organ Grinder is babysitting Lil' Monsta."
+      },
+      {
+        "id": "minstrel",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "preacher",
+        "reason": "Only 1 jinxed character can be in play."
+      }
+    ]
+  },
+  {
+    "id": "vizier",
+    "jinxes": [
+      {
+        "id": "alchemist",
+        "reason": "If the Alchemist has the Vizier ability, they may only choose to execute immediately if three or more players voted."
+      },
+      {
+        "id": "courtier",
+        "reason": "If the Vizier loses their ability, they learn this and if the Vizier is executed while they have their ability, their team wins."
+      },
+      {
+        "id": "investigator",
+        "reason": "If the Investigator learns that the Vizier is in play, the existence of the Vizier is not announced by the Storyteller."
+      },
+      {
+        "id": "magician",
+        "reason": "Only 1 jinxed character can be in play."
+      },
+      {
+        "id": "preacher",
+        "reason": "If the Vizier loses their ability, they learn this and if the Vizier is executed while they have their ability, their team wins."
+      },
+      {
+        "id": "fearmonger",
+        "reason": "The Vizier wakes with the Fearmonger, learns who they choose and cannot choose to execute that player."
+      }
+    ]
+  },
+  {
+    "id": "boomdandy",
+    "jinxes": [
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Plague Doctor is executed and the Storyteller would gain the Boomdandy ability, the Boomdandy ability triggers immediately."
+      }
+    ]
+  },
+  {
+    "id": "eviltwin",
+    "jinxes": [
+      {
+        "id": "plaguedoctor",
+        "reason": "The Storyt+eller cannot gain the Evil Twin ability if the Plague Doctor dies."
+      }
+    ]
+  },
+  {
+    "id": "fearmonger",
+    "jinxes": [
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Fearmonger ability in addition to their own ability, and learns this."
+      }
+    ]
+  },
+  {
+    "id": "goblin",
+    "jinxes": [
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Goblin ability in addition to their own ability, and learns this."
+      }
+    ]
+  },
+  {
+    "id": "hatter",
+    "jinxes": [
+      {
+        "id": "legion",
+        "reason": "If the Hatter dies and Legion is in play, nothing happens. If the Hatter dies and an evil player chooses Legion, all current evil players become Legion."
+      },
+      {
+        "id": "leviathan",
+        "reason": "If the Hatter dies on or after day 5, the Demon cannot choose Leviathan."
+      },
+      {
+        "id": "lilmonsta",
+        "reason": " If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
+      },
+      {
+        "id": "riot",
+        "reason": " If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
+      }
+    ]
+  },
+  {
+    "id": "scarletwoman",
+    "jinxes": [
+      {
+        "id": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Scarlet Woman ability in addition to their own ability, and learns this."
       }
     ]
   }
