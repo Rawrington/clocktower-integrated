@@ -94,7 +94,7 @@
 }
 
 .bluffs.open .bluffs-content {
-  height: 11vmin;
+  height: 12vmin;
 }
 
 
@@ -145,7 +145,7 @@
   height: 11vmin;
 
   padding: 0;
-  margin: .25em;
+  margin: .5vmin;
 }
 
 .bluffs-content .token-container:hover {
@@ -305,11 +305,14 @@
 
   height: 0;
 
-  transition: height 0.5s;
+  transition: height 0.5s,
+  width 0.2s;
+
+  flex-wrap: wrap-reverse;
 }
 
 .fabled-display.open .fabled-content {
-  height: 11vmin;
+  height: 12vmin;
 }
 
 
@@ -360,7 +363,7 @@
   height: 11vmin;
 
   padding: 0;
-  margin: .25em;
+  margin: .5vmin;
 
   transform: translateY(4px);
 }
@@ -477,6 +480,7 @@
 }
 
 .day-night-display span {
+  user-select: none;
   margin-right: 20px;
 }
 

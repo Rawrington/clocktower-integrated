@@ -488,11 +488,11 @@
       },
       {
         "id": "lilmonsta",
-        "reason": " If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
+        "reason": "If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
       },
       {
         "id": "riot",
-        "reason": " If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
+        "reason": "If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
       }
     ]
   },
@@ -502,6 +502,27 @@
       {
         "id": "plaguedoctor",
         "reason": "If the Plague Doctor dies, a living Minion gains the Scarlet Woman ability in addition to their own ability, and learns this."
+      }
+    ]
+  },
+  {
+    "id": "kazali",
+    "jinxes": [
+      {
+        "id": "bountyhunter",
+        "reason": "An evil Townsfolk is only created if the Bounty Hunter is still in play after the Kazali acts."
+      },
+      {
+        "id": "choirboy",
+        "reason": "The Kazali can not choose the King to become a Minion if a Choirboy is in play."
+      },
+      {
+        "id": "goon",
+        "reason": "If the Kazali chooses the Goon to become a Minion, remaining Minion choices are decided by the Storyteller."
+      },
+      {
+        "id": "marionette",
+        "reason": "If the Kazali chooses to create a Marionette, they must choose one of their neighbours."
       }
     ]
   }

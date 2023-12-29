@@ -39,6 +39,7 @@ function NominationDisplay() {
   const canVote = useSelector(state => canDoVote(state, me));
   const currentVotes = useSelector(state => state.players.filter(player => player.handUp).length);
   const gameId = useSelector(state => state.game);
+  const userSettings = useSelector(state => state.settings);
 
   const { lastJsonMessage, readyState, sendJsonMessage } = useWebSocket(
     SOCKET_URL,
@@ -125,7 +126,7 @@ function NominationDisplay() {
                           type: 'startVote',
                           myId: me,
                           gameId: gameId,
-                          transition: nomination.transition,
+                          transition: userSettings.timeBetweenVotes || 1,
                           countdown: true,
                         });
                       }}
@@ -139,7 +140,7 @@ function NominationDisplay() {
                           type: 'startVote',
                           myId: me,
                           gameId: gameId,
-                          transition: nomination.transition,
+                          transition: userSettings.timeBetweenVotes || 1,
                           countdown: false,
                         });
                       }}

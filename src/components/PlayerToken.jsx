@@ -155,6 +155,7 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
             }}
             style = {{
               pointerEvents: (nomination.nominating || privilegeLevel == 0) && 'none',
+              zIndex: zIndex+2,
             }}
           >
             <span>{ player.name }</span>
@@ -362,7 +363,7 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
                   }
                 }}
                 style={{
-                  transform: 'translateY(12vmin) rotate(' + -rotation + 'deg)',
+                  transform: 'translateY(13vmin) rotate(' + -rotation + 'deg)',
                   backgroundImage: 'url(' + noteBackground + ')',
                 }}
               >

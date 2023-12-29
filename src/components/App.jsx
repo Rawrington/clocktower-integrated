@@ -201,7 +201,13 @@ function Fabled() {
 
   return (
     <div className={open ? 'fabled-display open' : 'fabled-display'}>
-      <div className="fabled-content">
+      <div
+        className="fabled-content"
+        style={{
+          height: open && fabledList.length > 5 && ((Math.floor((fabledList.length - 1) / 4) + 1) * 12) + 'vmin',
+          width: fabledList.length > 5 ? '48vmin' : (fabledList.length * 12) + 'vmin',
+        }}
+      >
         {fabledList.map((fabled, i) => (
           <div
             className="token-container"
@@ -212,24 +218,26 @@ function Fabled() {
               role={getFabled(fabled)}
               description="right"
             />
-            <div
-              className="fabled-remove"
-              onClick={() => {
-                if(privilegeLevel > 0) {
-                  dispatch(removeFabled(fabled));
+            {privilegeLevel > 0 &&
+              <div
+                className="fabled-remove"
+                onClick={() => {
+                  if(privilegeLevel > 0) {
+                    dispatch(removeFabled(fabled));
 
-                  sendJsonMessage({
-                    type: 'setFabled',
-                    myId: me,
-                    gameId: gameId,
-                    fabled: fabledList.filter(f => f !== fabled),
-                  });
-                }
-              }}
-              style={{
-                backgroundImage: 'url(' + bigX + ')'
-              }}
-            ></div>
+                    sendJsonMessage({
+                      type: 'setFabled',
+                      myId: me,
+                      gameId: gameId,
+                      fabled: fabledList.filter(f => f !== fabled),
+                    });
+                  }
+                }}
+               style={{
+                  backgroundImage: 'url(' + bigX + ')'
+                }}
+              ></div>
+            }
           </div>
         ))}
       </div>

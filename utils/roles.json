@@ -1364,5 +1364,17 @@
     "name": "Hatter",
     "team": "outsider",
     "ability": "If you died today or tonight, the Minion & Demon players may choose new Minion & Demon characters to be."
+  },
+  {
+    "id": "kazali",
+    "firstNight": 2.1,
+    "firstNightReminder": "The Kazali points at a player and a Minion on the character sheet. Replace their old character token with the Minion token, show them the “You Are” info token then the Minion character token, and give a thumbs down. Repeat until the normal number of Minions exist. Put the Kazali to sleep.",
+    "otherNight": 35.1,
+    "otherNightReminder": "The Kazali points to a player. That player dies.",
+    "reminders": ["Dead"],
+    "setup": true,
+    "name": "Kazali",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. [You choose which players are Minions. -? to +? Outsiders]"
   }
 ]

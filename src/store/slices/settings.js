@@ -6,6 +6,8 @@ const initialState = {
   pauseTimerDuringNom: true,
   extendTimerAfterNom: 2,
   moveOnDiscord: true,
+  hiddenVotes: false,
+  timeBetweenVotes: 1,
 };
 
 export const settingsSlice = createSlice({

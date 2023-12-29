@@ -180,8 +180,8 @@ export function getEdition(edition) {
 
     return {
       id: 'customScript',
-      author: meta && meta.author,
-      name: meta && meta.name,
+      author: (meta && meta.author) || 'Unknown',
+      name: (meta && meta.name) || 'Custom Script',
       logo: meta && meta.logo,
       background: meta && meta.background,
       roles: defaultRoles,

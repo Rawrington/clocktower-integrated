@@ -50,13 +50,13 @@ function AppNetworkGate({ children }) {
         }
 
         timerRef.current = setInterval(() => {
-          if (Date.now() - lastMessageTime.current > 30000) {
+          if (Date.now() - lastMessageTime.current > 90000) {
             if(event.target && event.target.close) {
               setCanRetry(true);
               event.target.close();
             }
           }
-        }, 30000);
+        }, 90000);
 
         setSentAuth(false);
       },

@@ -242,9 +242,50 @@ function TimerMenu({ userSettings, timerPaused, me, gameId, sendJsonMessage }) {
 
 function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
   const dispatch = useDispatch();
+
+  // this is to make sure the server has the current value when you load into a game.
+  useEffect(() => {
+    sendJsonMessage({
+      type: 'hiddenVotes',
+      myId: me,
+      gameId: gameId,
+      forceHidden: userSettings.hiddenVotes,
+    });
+  }, [sendJsonMessage, me, gameId, userSettings.hiddenVotes]);
   
   return (
     <ul>
+      <li
+        onClick={() => {
+          const nextValue = userSettings.hiddenVotes ? (userSettings.hiddenVotes === 'force' ? false : 'force') : 'forcedisable';
+
+          dispatch(updateSettings({
+            hiddenVotes: nextValue,
+          }));
+
+          sendJsonMessage({
+            type: 'hiddenVotes',
+            myId: me,
+            gameId: gameId,
+            forceHidden: nextValue,
+          });
+        }}
+      >
+        <span className="left-setting">Force Hidden Votes:</span>
+        <span className="right-setting">{userSettings.hiddenVotes ? (userSettings.hiddenVotes === 'force' ? ('[On]') : ('[Off]')) : ('[Default]')}</span>
+      </li>
+      <li
+        onClick={() => {
+          const nextValue = Math.max((((userSettings.timeBetweenVotes || 1) * 2) + 1) % 7, 1) / 2;
+
+          dispatch(updateSettings({
+            timeBetweenVotes: nextValue,
+          }));
+        }}
+      >
+        <span className="left-setting">Time Between Votes:</span>
+        <span className="right-setting">{'[' + (userSettings.timeBetweenVotes || 1) + 's]'}</span>
+      </li>
       <li
         onClick={() => {
           dispatch(updateSettings({
@@ -269,7 +310,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
             gameId: gameId,
             night: !isNight,
             discord: userSettings.moveOnDiscord,
-          })
+          });
         }}
       >
         {isNight ? 'Change to Day Phase' : 'Go to Night Phase'}
@@ -281,7 +322,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
             myId: me,
             gameId: gameId,
             alert: 'The Storyteller has requested your presence in the town square!',
-          })
+          });
         }}
       >
         Request Players in Town Square
@@ -293,7 +334,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
             myId: me,
             gameId: gameId,
             alert: 'WARNING: You will be moved the Town Square shortly!',
-          })
+          });
         }}
       >
         Summon Players to Town Square Channel
@@ -311,7 +352,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
             myId: me,
             gameId: gameId,
             alert: alert,
-          })
+          });
         }}
       >
         Send Custom Alert
