@@ -59,6 +59,7 @@ function App() {
       <Fabled />
       <NightDisplay />
       <AlertDisplay />
+      <CountdownDisplay />
       <NetworkHandler />
     </>
   );
@@ -284,6 +285,23 @@ function AlertDisplay() {
   return (
     <div className="storyteller-alert">
       { alert.toString() }
+    </div>
+  );
+}
+
+function CountdownDisplay() {
+  const countdown = useSelector(state => state.nomination.countdown);
+
+  if (!countdown) {
+    return null;
+  }
+
+  return (
+    <div className="vote-countdown">
+      <span className="three">3</span>
+      <span className="two">2</span>
+      <span className="one">1</span>
+      <span className="go">GO!</span>
     </div>
   );
 }

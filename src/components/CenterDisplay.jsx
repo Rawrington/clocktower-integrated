@@ -142,7 +142,13 @@ function CenterTimer({ timer, privilegeLevel }) {
       setDisplayTime(display);
     }
 
-    return remainder;
+    if (remainder >= 0) {
+      clearTimeout(timerRef.current);
+
+      timerRef.current = setTimeout(() => {
+        updateDisplay();
+      }, Math.ceil(remainder));
+    }
   }
 
   if(typeof timer === 'string') {
@@ -151,7 +157,7 @@ function CenterTimer({ timer, privilegeLevel }) {
     }
   }
   else if (timer > Date.now()) {
-    const delay = updateDisplay();
+    updateDisplay();
   }
   else if (displayTime !== '--:--') {
     setDisplayTime('--:--');
@@ -159,13 +165,7 @@ function CenterTimer({ timer, privilegeLevel }) {
 
   useEffect(() => {
     if (typeof timer !== 'string' && timer > Date.now()) {
-      const delay = updateDisplay();
-
-      clearTimeout(timerRef.current);
-
-      timerRef.current = setTimeout(() => {
-        updateDisplay();
-      }, Math.ceil(delay) + 1);
+      updateDisplay();
     }
   }, [displayTime, timer]);
 

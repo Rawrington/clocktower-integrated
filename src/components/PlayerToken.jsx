@@ -86,9 +86,11 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
           return false;
 
         if (resizeEvents.includes(json.type)) {
-          if (playerRef && playerRef.current && playerRef.current.getBoundingClientRect) {
-            handleResize(playerRef.current);
-          }
+          setTimeout(() => {
+            if (playerRef && playerRef.current && playerRef.current.getBoundingClientRect) {
+              handleResize(playerRef.current);
+            }
+          }); //delay the handler so we push accurate values to the array!
         }
 
         return false; //we do not care about ANY incoming messages we need to send them!

@@ -124,9 +124,11 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
           return false;
 
         if (resizeEvents.includes(json.type)) {
-          if (noteRef && noteRef.current) {
-            findClosestPlayer(position.x, position.y);
-          }
+          setTimeout(() => {
+            if (noteRef && noteRef.current) {
+              findClosestPlayer(position.x, position.y);
+            }
+          });
         }
 
         return false; //we do not care about ANY incoming messages we need to send them!

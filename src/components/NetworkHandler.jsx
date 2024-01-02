@@ -50,6 +50,7 @@ function NetworkHandler() {
   const [ lastRMessage, setLastRMessage ] = useState(0);
 
   const alertRef = useRef(null);
+  const countdownRef = useRef(null);
 
   const { sendJsonMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(
     SOCKET_URL,
@@ -169,6 +170,7 @@ function NetworkHandler() {
         over: false,
         running: false,
         nominating: false,
+        countdown: false,
       }));
 
       dispatch(clearHands());
@@ -228,6 +230,18 @@ function NetworkHandler() {
       alertRef.current = setTimeout(() => {
         dispatch(setAlert(''));
       }, 5000);
+    }
+
+    if (lastJsonMessage.type === 'playCountdown') {
+      dispatch(setNomination({
+        countdown: false,
+      }));
+
+      setTimeout(() => {
+        dispatch(setNomination({
+          countdown: true,
+        }));
+      });
     }
   });
 

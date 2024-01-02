@@ -20,7 +20,7 @@ import { setPlayers } from './slices/players';
 const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['edition', 'me', 'menu', 'privilege', 'settings', 'timer'] //get rekt losers
+  blacklist: ['edition', 'me', 'menu', 'nomination', 'privilege', 'settings', 'timer'] //get rekt losers
 };
 
 const reducers = combineReducers({

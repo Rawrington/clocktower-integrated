@@ -7,6 +7,8 @@ const initialState = {
   transition: 1,
   open: false,
   nominating: false,
+  running: false,
+  countdown: false,
 };
 
 export const nominationSlice = createSlice({
