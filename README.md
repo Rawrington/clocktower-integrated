@@ -23,7 +23,10 @@ Currently, feature parity with clocktower.online is being achieved but some cool
 - Iconography by Font Awesome
 - Webfonts by Google Fonts and Online Web Fonts
 - Alert sound by [RICHERlandTV](https://freesound.org/people/RICHERlandTV/) from [freesound.org](https://freesound.org)
+- Timer sound by [tim.kahn](https://freesound.org/people/tim.kahn/) from [freesound.org](https://freesound.org)
+- New Experimental icons by 'Voltexx'
 - All other images and icons are copyright to their respective owners
 - The [townsquare](https://github.com/bra1n/townsquare/) project by bra1n for inspiration and some code source, including the writing used in this section!
+- Licensed under GPL
 
 This project is provided free of charge and not affiliated with The Pandemonium Institute in any way.
