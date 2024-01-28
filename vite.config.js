@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import VitePluginLeaderLine from 'vite-plugin-leader-line'
 
@@ -6,7 +6,8 @@ import VitePluginLeaderLine from 'vite-plugin-leader-line'
 export default defineConfig({
   plugins: [
     react(),
-    VitePluginLeaderLine()
+    VitePluginLeaderLine(),
+    splitVendorChunkPlugin()
   ],
   server: {
     host: '0.0.0.0',

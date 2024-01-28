@@ -12,7 +12,7 @@ import { closeMenu } from '../store/slices/menu';
 import { setNomination, setTransition, setHand } from '../store/slices/nomination';
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
-import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber } from '../store/slices/others';
+import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber, setGameEndText } from '../store/slices/others';
 import { clearNotes } from '../store/slices/notes';
 
 import { getEdition, clearCache } from '../genericFunctions';
@@ -41,6 +41,7 @@ const whitelist = [
   'setVoiceMembers',
   'storytellerGrim',
   'timerEnd',
+  'setGameEnd',
 ];
 
 const events = ['mousedown', 'touchstart'];
@@ -51,6 +52,7 @@ function NetworkHandler() {
 
   const alertRef = useRef(null);
   const countdownRef = useRef(null);
+  const gameEndRef = useRef(null);
 
   const { sendJsonMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(
     SOCKET_URL,
@@ -230,6 +232,18 @@ function NetworkHandler() {
       alertRef.current = setTimeout(() => {
         dispatch(setAlert(''));
       }, 5000);
+    }
+
+    if (lastJsonMessage.type === 'setGameEnd') {
+      dispatch(setGameEndText(lastJsonMessage.result));
+
+      if (gameEndRef.current) {
+        clearTimeout(gameEndRef.current);
+      }
+
+      gameEndRef.current = setTimeout(() => {
+        dispatch(setGameEndText(false));
+      }, 8000);
     }
 
     if (lastJsonMessage.type === 'playCountdown') {

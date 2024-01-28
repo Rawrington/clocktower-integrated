@@ -2,6 +2,7 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'reduxjs-toolkit-persist';
 import storage from 'reduxjs-toolkit-persist/lib/storage';
 
+import dialogueReducer from './slices/dialogue';
 import editionReducer from './slices/edition';
 import gameReducer from './slices/game';
 import meReducer from './slices/me';
@@ -20,7 +21,7 @@ import { setPlayers } from './slices/players';
 const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['edition', 'me', 'menu', 'nomination', 'privilege', 'settings', 'timer'] //get rekt losers
+  blacklist: ['dialogue', 'edition', 'me', 'menu', 'nomination', 'privilege', 'settings', 'timer'] //get rekt losers
 };
 
 const reducers = combineReducers({

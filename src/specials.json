@@ -25,5 +25,10 @@
     "type": "signal",
     "name": "grimoire",
     "time": "night"
+  },
+  {
+    "role": "villageidiot",
+    "type": "selection",
+    "name": "bag-duplicate"
   }
 ]

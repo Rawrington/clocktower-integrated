@@ -8,6 +8,7 @@ const initialState = {
   voicemembers: [],
   stshow: false,
   daynumber: 0,
+  gameEndText: false,
 };
 
 export const othersSlice = createSlice({
@@ -48,8 +49,6 @@ export const othersSlice = createSlice({
       state.st = {};
       state.st.players = action.payload.players;
       state.st.notes = action.payload.notes;
-
-      console.log(state.st);
     },
     clearStorytellerGrim: (state) => {
       delete state.st;
@@ -63,9 +62,12 @@ export const othersSlice = createSlice({
     incrementDay: (state) => {
       state.daynumber = state.daynumber + 1;
     },
+    setGameEndText: (state, action) => {
+      state.gameEndText = action.payload;
+    },
   },
 });
 
-export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers, setStorytellerGrim, clearStorytellerGrim, showStorytellerGrim, setDayNumber, incrementDay } = othersSlice.actions;
+export const { setBluffs, setBluff, clearBluffs, setFabled, addFabled, removeFabled, clearFabled, setVotingHistory, setAlert, setVoiceMembers, setStorytellerGrim, clearStorytellerGrim, showStorytellerGrim, setDayNumber, incrementDay, setGameEndText } = othersSlice.actions;
 
 export default othersSlice.reducer;

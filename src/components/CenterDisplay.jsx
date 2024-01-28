@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import useWebSocket from 'react-use-websocket';
 
-import SOCKET_URL from '../socket_config.js'
+import SOCKET_URL from '../socket_config.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserGroup, faUsers, faHeartPulse, faCheckToSlot, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { setMenu } from '../store/slices/menu';
 import { setNomination, setNominationsOpen } from '../store/slices/nomination';
 import { showStorytellerGrim } from '../store/slices/others';
 
-import { getRole } from '../genericFunctions'
+import { getRole } from '../genericFunctions';
 
 import townNumber from '../game.json';
 
@@ -126,6 +126,7 @@ function CenterTimer({ timer, privilegeLevel }) {
 
   const timerRef = useRef(null);
 
+  
   function updateDisplay() {
     const diffy = (timer - Date.now()) / 1000;
 
@@ -150,9 +151,9 @@ function CenterTimer({ timer, privilegeLevel }) {
       }, Math.ceil(remainder));
     }
   }
-
-  if(typeof timer === 'string') {
-    if(timer !== displayTime) {
+  
+  if (typeof timer === 'string') {
+    if (timer !== displayTime) {
       setDisplayTime(timer);
     }
   }
@@ -167,7 +168,7 @@ function CenterTimer({ timer, privilegeLevel }) {
     if (typeof timer !== 'string' && timer > Date.now()) {
       updateDisplay();
     }
-  }, [displayTime, timer]);
+  });
 
   return (
     <>
@@ -208,10 +209,10 @@ function TopDisplay({ privilegeLevel }) {
     SOCKET_URL,
     {
       filter: () => {
-        return false; //we do not care about ANY incoming messages we need to send them!
+        return false;
       },
       share: true,
-    }
+    },
   );
 
   const dispatch = useDispatch();
@@ -278,7 +279,7 @@ function TopDisplay({ privilegeLevel }) {
           Cancel
         </div>
       }
-      {stGrim && 
+      {stGrim &&
         <div
           className="button"
           onClick={() => {

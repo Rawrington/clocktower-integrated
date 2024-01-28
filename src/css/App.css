@@ -607,3 +607,116 @@
     opacity: 1;
   }
 }
+
+.game-end {
+  font-family: 'Roboto', sans-serif;
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 99;
+  opacity: 0;
+
+  background-color: rgba(0, 0, 0, 0.7);
+
+  animation-name: game-end-display;
+  animation-duration: 8s;
+}
+
+@keyframes game-end-display {
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+}
+
+.game-end > span {
+  position: absolute;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 100%;
+  height: 15vmin;
+
+  text-align: center;
+
+  font-size: 15vmin;
+  line-height: 15vmin;
+
+  
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-delay: 3s;
+
+  text-shadow:
+    1px 1px 2px #000000,
+    -1px 1px 2px #000000,
+    -1px -1px 2px #000000,
+    1px -1px 2px #000000;
+}
+
+.game-end.good > span {
+  animation-name: game-end-glow-good;
+  color: #1f65ff;
+}
+
+@keyframes game-end-glow-good {
+  0% {
+    filter: none;
+  }
+  50% {
+    filter: drop-shadow(0 0 2vmin #1f65ff);
+  }
+  100% {
+    filter: none;
+  }
+}
+
+.game-end.evil > span {
+  animation-name: game-end-glow-evil;
+  color: #ce0100;
+}
+
+@keyframes game-end-glow-evil {
+  0% {
+    filter: none;
+  }
+  50% {
+    filter: drop-shadow(0 0 2vmin #ce0100);
+  }
+  100% {
+    filter: none;
+  }
+}
+
+.game-end span span {
+  position: relative;
+  top: -100vmin;
+  opacity: 0;
+
+  animation-name: text-fall;
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes text-fall {
+  0% {
+    top: -100vmin;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    top: 3vmin;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}

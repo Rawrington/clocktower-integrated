@@ -26,7 +26,7 @@ import { getRole, getFabled } from '../genericFunctions';
 
 import { selectPlayerList } from '../store/slices/players';
 import { selectNotesList } from '../store/slices/notes';
-import { removeFabled } from '../store/slices/others';
+import { removeFabled, setGameEndText } from '../store/slices/others';
 import { setMenu } from '../store/slices/menu';
 
 // I honestly forgor that Maps were a thing its probably not a problem I hope!
@@ -60,6 +60,7 @@ function App() {
       <NightDisplay />
       <AlertDisplay />
       <CountdownDisplay />
+      <GameEndDisplay />
       <NetworkHandler />
     </>
   );
@@ -302,6 +303,38 @@ function CountdownDisplay() {
       <span className="two">2</span>
       <span className="one">1</span>
       <span className="go">GO!</span>
+    </div>
+  );
+}
+
+function GameEndDisplay() {
+  const text = useSelector(state => state.others.gameEndText);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (text) {
+      setTimeout(() => {
+        dispatch(setGameEndText(false));
+      }, 8000);
+    }
+  }, [text, dispatch]);
+
+  if (!text) {
+    return null;
+  }
+
+  return (
+    <div className={'game-end ' + text.class}>
+      <span>
+        {text.text.split('').map((char, i) => (
+          <span
+            style={{ animationDelay: (i / 5) + 's' }}
+            key={i}
+          >
+            {char}
+          </span>
+        ))}
+      </span>
     </div>
   );
 }
