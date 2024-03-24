@@ -169,9 +169,10 @@ export function getEdition(edition) {
         return role.id;
       });
 
-      defaultRoles = defaultRoles.filter((role, i) => defaultRoles.indexOf(role) === i);
+      defaultRoles = defaultRoles.filter((role, i) => defaultRoles.indexOf(role) === i && !getFabled(role));
 
       defaultRoles.sort((a, b) => {
+        console.log(b);
         return (getRole(b) || b).team.localeCompare((getRole(a) || a).team);
       });
 
