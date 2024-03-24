@@ -90,6 +90,10 @@
       {
         "id": "pithag",
         "reason": "After day 5, the Pit-Hag cannot choose Leviathan."
+      },
+      {
+        "id": "hatter",
+        "reason": "If the Hatter dies on or after day 5, the Demon cannot choose Leviathan."
       }
     ]
   },
@@ -120,6 +124,10 @@
       {
         "id": "scarletwoman",
         "reason": "If there are 5 or more players alive and the player holding the Lil' Monsta token dies, the Scarlet Woman is given the Lil' Monsta token tonight."
+      },
+      {
+        "id": "hatter",
+        "reason": "If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
       }
     ]
   },
@@ -142,7 +150,15 @@
       {
         "id": "preacher",
         "reason": "Only 1 jinxed character can be in play."
-      }
+      },
+      {
+        "id": "hatter",
+        "reason": "If the Hatter dies and Legion is in play, nothing happens. If the Hatter dies and an evil player chooses Legion, all current evil players become Legion."
+      },
+      {
+        "id": "summoner",
+        "reason": "If the Summoner creates Legion, most players (including all evil players) become evil Legion."
+      },
     ]
   },
   {
@@ -373,6 +389,14 @@
       {
         "id": "preacher",
         "reason": "Riot registers as a Minion to the Preacher."
+      },
+      {
+        "id": "hatter",
+        "reason": "If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
+      },
+      {
+        "id": "summoner",
+        "reason": "If the Summoner creates Riot, the chosen player and all evil players become Riot. The chosen player must be one of the Summoner's good living neighbours."
       }
     ]
   },
@@ -484,27 +508,6 @@
     ]
   },
   {
-    "id": "hatter",
-    "jinxes": [
-      {
-        "id": "legion",
-        "reason": "If the Hatter dies and Legion is in play, nothing happens. If the Hatter dies and an evil player chooses Legion, all current evil players become Legion."
-      },
-      {
-        "id": "leviathan",
-        "reason": "If the Hatter dies on or after day 5, the Demon cannot choose Leviathan."
-      },
-      {
-        "id": "lilmonsta",
-        "reason": "If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
-      },
-      {
-        "id": "riot",
-        "reason": "If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
-      }
-    ]
-  },
-  {
     "id": "scarletwoman",
     "jinxes": [
       {
@@ -531,6 +534,31 @@
       {
         "id": "marionette",
         "reason": "If the Kazali chooses to create a Marionette, they must choose one of their neighbours."
+      },
+      {
+        "id": "summoner",
+        "reason": "The Kazali can not choose to create a Summoner."
+      }
+    ]
+  },
+  {
+    "id": "summoner",
+    "jinxes": [
+      {
+        "id": "alchemist",
+        "reason": "If there is an Alchemist-Summoner in play, the game starts with a Demon in play, as normal. If the Alchemist-Summoner chooses a player, they make that player a Demon but do not change their alignment."
+      },
+      {
+        "id": "clockmaker",
+        "reason": "If the Summoner is in play, the Clockmaker does not receive their information until a Demon is created."
+      },
+      {
+        "id": "poppygrower",
+        "reason": "If the Poppy Grower is alive when the Summoner acts, the Summoner chooses which Demon, but the Storyteller chooses which player."
+      },
+      {
+        "id": "marionette",
+        "reason": "The Marionette neighbours the Summoner. The Summoner knows who the Marionette is."
       }
     ]
   }
