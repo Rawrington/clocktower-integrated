@@ -6,6 +6,7 @@ import SOCKET_URL from '../socket_config.js';
 
 import PlayerToken from './PlayerToken';
 import GlobalMenus from './GlobalMenus';
+import Dialogue from './Dialogue';
 import CenterDisplay from './CenterDisplay';
 import DraggableNote from './DraggableNote';
 import NominationDisplay from './NominationDisplay';
@@ -37,6 +38,7 @@ function App() {
   return (
     <>
       <GlobalMenus />
+      <Dialogue />
       <DiscordWakeUp
         ref={ref} 
       />

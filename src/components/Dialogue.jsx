@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import '../css/Dialogue.css';
 
@@ -9,33 +9,71 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 function Dialogue() {
-  const question = useSelector(state => state.dialogue.question);
+  const {question, response} = useSelector(state => state.dialogue);
 
-  if (!question) {
+  const [inputAnswer, setInputAnswer] = useState('');
+
+  const dispatch = useDispatch();
+
+  if (!question || response) {
     return null;
   }
 
+  function updateAnswer(event) {
+    if(event.target.value.length > 512) {
+      setInputAnswer(inputAnswer);
+      return
+    }
+    
+    setInputAnswer(event.target.value);
+  }
+
   return (
-    <div
-      className="question-backdrop"
-      onClick={() => {
-        dispatch(clearQuestion());
-      }}
-    >
-      <div className="question-modal">
+    <>
+      <div className="global-menu-modal question-modal">
         <div
-          className="question-x"
+          className="global-menu-x"
           onClick={() => {
-            dispatch(closeMenu());
+            dispatch(clearQuestion());
           }}
         >
           <FontAwesomeIcon icon={faX} />
         </div>
-        <div className="question-prompt">
-          
+        <h3>{ question }</h3>
+        <div className="menu-content question-prompt">
+          <input
+            type="text"
+            name="answerr"
+            value={inputAnswer}
+            onChange={updateAnswer}
+            maxLength="512"
+            autoComplete="off"
+          />
+          <div className="button-group">
+            <div
+              className={'button' + (inputAnswer.length > 0 ? '' : ' locked') }
+              onClick={() => {
+                if(inputAnswer.length > 0) {
+                  dispatch(setResponse(inputAnswer));
+                }
+                setInputAnswer('');
+              }}
+            >
+              Ok
+            </div>
+            <div
+              className="button"
+              onClick={() => {
+                dispatch(clearQuestion());
+              }}
+            >
+              Cancel
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="question-backdrop" />
+    </>
   );
 }
 

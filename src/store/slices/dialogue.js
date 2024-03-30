@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const dialogueSlice = createSlice({
-  name: 'settings',
+  name: 'dialogue',
   initialState,
   reducers: {
     setQuestion: (state, action) => {

@@ -25,6 +25,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
+  dialogue: dialogueReducer,
   edition: editionReducer,
   game: gameReducer,
   me: meReducer,

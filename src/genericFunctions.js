@@ -172,7 +172,6 @@ export function getEdition(edition) {
       defaultRoles = defaultRoles.filter((role, i) => defaultRoles.indexOf(role) === i && !getFabled(role));
 
       defaultRoles.sort((a, b) => {
-        console.log(b);
         return (getRole(b) || b).team.localeCompare((getRole(a) || a).team);
       });
 

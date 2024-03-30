@@ -12,6 +12,7 @@ import { setMenu, closeMenu } from '../store/slices/menu';
 import { setNight } from '../store/slices/night';
 import { clearNotes } from '../store/slices/notes';
 import { incrementDay } from '../store/slices/others';
+import { setQuestion, clearQuestion } from '../store/slices/dialogue';
 
 import '../css/Settings.css';
 
@@ -30,6 +31,8 @@ function Settings() {
 
   const me = useSelector(state => state.me);
   const gameId = useSelector(state => state.game);
+
+  const question = useSelector(state => state.dialogue.question);
 
   const { sendJsonMessage } = useWebSocket(
     SOCKET_URL,
@@ -50,6 +53,10 @@ function Settings() {
 
   useEffect(() => {
     function handleKeyUp(event) {
+      if (question) {
+        return;
+      }
+
       if (event.key.toLowerCase() === 'r') {
         dispatch(setMenu({
           menu: 'showRoles',
@@ -77,7 +84,7 @@ function Settings() {
     return (() => {
       window.removeEventListener('keyup', handleKeyUp);
     });
-  }, [dispatch])
+  }, [dispatch, question])
 
   return (
     <div className={settingsOpen ? ('settings-menu settings-open') : ('settings-menu')}>
@@ -253,6 +260,21 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
     });
   }, [sendJsonMessage, me, gameId, userSettings.hiddenVotes]);
   
+  const question = useSelector(state => state.dialogue.question);
+  const response = useSelector(state => state.dialogue.response);
+
+  useEffect(() => {
+    if (question === 'Enter your custom alert.' && response) {
+      sendJsonMessage({
+        type: 'storytellerAlert',
+        myId: me,
+        gameId: gameId,
+        alert: response,
+      });
+      dispatch(clearQuestion());
+    }
+  }, [question, response, dispatch, sendJsonMessage]);
+
   return (
     <ul>
       <li
@@ -341,18 +363,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
       </li>
       <li
         onClick={() => {
-          const alert = window.prompt("Enter your custom alert.");
-
-          if (!alert) {
-            return;
-          }
-
-          sendJsonMessage({
-            type: 'storytellerAlert',
-            myId: me,
-            gameId: gameId,
-            alert: alert,
-          });
+          dispatch(setQuestion("Enter your custom alert."));
         }}
       >
         Send Custom Alert

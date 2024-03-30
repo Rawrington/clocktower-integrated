@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
@@ -11,6 +11,7 @@ import { addNote } from '../store/slices/notes';
 import { updateSettings } from '../store/slices/settings';
 import { addFabled, setBluff, setAlert } from '../store/slices/others';
 import { setEdition } from '../store/slices/edition';
+import { setQuestion, clearQuestion } from '../store/slices/dialogue';
 
 import '../css/GlobalMenus.css';
 
@@ -27,6 +28,7 @@ import editions from '../editions.json';
 import townNumber from '../game.json';
 
 import Token from './Token';
+
 
 // Is there a better way to do modal menus? OH GOD THE RETURN PASSING WHY DO I YET STAND
 function GlobalMenus() {
@@ -181,8 +183,10 @@ function AddNote({ target, edition }) {
 
   const player = useSelector(state => getPlayerWithBox(state, target), shallowEqual);
 
-  const dispatch = useDispatch();
+  const question = useSelector(state => state.dialogue.question);
+  const response = useSelector(state => state.dialogue.response);
 
+  const dispatch = useDispatch();
 
   function spawnNote(note) {
     const pos = {
@@ -201,6 +205,13 @@ function AddNote({ target, edition }) {
     dispatch(closeMenu());
   }
 
+  useEffect(() => {
+    if(question === 'Enter a custom note:' && response) {
+      spawnNote({ text: response });
+      dispatch(clearQuestion());
+    }
+  }, [question, response, dispatch, spawnNote]);
+
   return (
     <>
       <h3>Add Note to { player.name }</h3>
@@ -217,11 +228,7 @@ function AddNote({ target, edition }) {
           style={{ backgroundImage: 'url(' + noteBackground + ')' }}
           className="note-option"
           onClick={() => {
-            const answer = window.prompt('Enter a custom note:', '');
-            if (answer == null || answer == '') {
-              return;
-            }
-            spawnNote({ text: answer });
+            dispatch(setQuestion('Enter a custom note:'));
           }}>
           <div
             className="note-reminder"
@@ -1213,6 +1220,9 @@ function CustomEdition() {
   const me = useSelector(state => state.me);
   const gameId = useSelector(state => state.game);
 
+  const question = useSelector(state => state.dialogue.question);
+  const response = useSelector(state => state.dialogue.response);
+
   const { sendJsonMessage } = useWebSocket(
     SOCKET_URL,
     {
@@ -1236,9 +1246,11 @@ function CustomEdition() {
     dispatch(closeMenu());
   }
 
-  // credit to Steffen/bra1n copypasted this and some code blowunder GPL! if it aint broke don't fix it angle ig
+  // credit to Steffen/bra1n copypasted this and some code below, under GPL! if it aint broke don't fix it angle ig
   async function handleURL(url) {
-    const res = await fetch(url);
+    //dumb fix for botc scripts handing out url with http redirect
+    const res = await fetch(url.replace('http://botc-scripts.azurewebsites.net/', 'https://botc-scripts.azurewebsites.net/'));
+
     if (res && res.json) {
       try {
         const script = await res.json();
@@ -1254,6 +1266,13 @@ function CustomEdition() {
       }
     }
   }
+
+  useEffect(() => {
+    if (question === 'Enter URL to a custom-script.json file' && response) {
+      handleURL(response);
+      dispatch(clearQuestion());
+    }
+  }, [question, response, dispatch, handleURL]);
 
   const fileInput = useRef(null);
 
@@ -1301,11 +1320,7 @@ function CustomEdition() {
           <div
             className="button"
             onClick={() => {
-              const url = window.prompt("Enter URL to a custom-script.json file");
-              
-              if (url) {
-                handleURL(url);
-              }
+              dispatch(setQuestion('Enter URL to a custom-script.json file'));
             }}
           >
             Enter URL
