@@ -104,6 +104,9 @@ function GlobalMenus() {
         {currentMenu.menu === 'uploadCustomEdition' && privilegeLevel >= 1 &&
           <CustomEdition />
         }
+        {currentMenu.menu === 'gameEnd' && privilegeLevel >= 1 &&
+          <GameEnd />
+        }
       </div>
       <div
         className="global-menu-background"
@@ -1227,7 +1230,8 @@ function CustomEdition() {
     SOCKET_URL,
     {
       filter: () => {
-        return false; //we do not care about ANY incoming messages we need to send them!
+        return false;
+        //we do not care about ANY incoming messages we need to send them!
       },
       share: true,
     }
@@ -1356,6 +1360,64 @@ function CustomEdition() {
             }}
           >
             Back
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function GameEnd() {
+  const me = useSelector(state => state.me);
+  const gameId = useSelector(state => state.game);
+
+  const dispatch = useDispatch();
+
+  const { sendJsonMessage } = useWebSocket(
+    SOCKET_URL,
+    {
+      filter: () => {
+        return false;
+        //we do not care about ANY incoming messages we need to send them!
+      },
+      share: true,
+    }
+  );
+
+  return (
+    <>
+      <h3>Which team has won the game?</h3>
+      <div className="menu-content menu-game-end">
+        <div className="button-group">
+          <div
+            className="button"
+            onClick={() => {
+              sendJsonMessage({
+                type: 'callGame',
+                myId: me,
+                gameId: gameId,
+                result: 'good',
+              });
+
+              dispatch(closeMenu());
+            }}
+          >
+            Good Wins
+          </div>
+          <div
+            className="button"
+            onClick={() => {
+              sendJsonMessage({
+                type: 'callGame',
+                myId: me,
+                gameId: gameId,
+                result: 'evil',
+              });
+              
+              dispatch(closeMenu());
+            }}
+          >
+            Evil Wins
           </div>
         </div>
       </div>

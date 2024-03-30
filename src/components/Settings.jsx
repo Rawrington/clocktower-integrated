@@ -38,13 +38,14 @@ function Settings() {
     SOCKET_URL,
     {
       filter: () => {
-        return false; //we do not care about ANY incoming messages we need to send them!
+        return false;
+        //we do not care about ANY incoming messages we need to send them!
       },
       share: true,
-    }
+    },
   );
 
-  if(privilegeLevel !== 1 && subMenu.type !== 'help') {
+  if (privilegeLevel !== 1 && subMenu.type !== 'help') {
     setSubMenu({
       name: 'Help',
       type: 'help',
@@ -61,21 +62,21 @@ function Settings() {
         dispatch(setMenu({
           menu: 'showRoles',
           target: -1,
-        }))
+        }));
       }
 
       if (event.key.toLowerCase() === 'n') {
         dispatch(setMenu({
           menu: 'showNightOrder',
           target: -1,
-        }))
+        }));
       }
 
       if (event.key.toLowerCase() === 'v') {
         dispatch(setMenu({
           menu: 'showVotingHistory',
           target: -1,
-        }))
+        }));
       }
     }
 
@@ -102,7 +103,7 @@ function Settings() {
           <li
             className={ subMenu.type === 'help' ? 'selected' : '' }
             onClick={() => {
-              if(!settingsOpen) {
+              if (!settingsOpen) {
                 setSettingsOpen(true);
               }
 
@@ -119,7 +120,7 @@ function Settings() {
               <li
                 className={ subMenu.type === 'setup' ? 'selected' : '' }
                 onClick={() => {
-                  if(!settingsOpen) {
+                  if (!settingsOpen) {
                     setSettingsOpen(true);
                   }
 
@@ -134,7 +135,7 @@ function Settings() {
               <li
                 className={ subMenu.type === 'timer' ? 'selected' : '' }
                 onClick={() => {
-                  if(!settingsOpen) {
+                  if (!settingsOpen) {
                     setSettingsOpen(true);
                   }
 
@@ -149,7 +150,7 @@ function Settings() {
               <li
                 className={ subMenu.type === 'game' ? 'selected' : '' }
                 onClick={() => {
-                  if(!settingsOpen) {
+                  if (!settingsOpen) {
                     setSettingsOpen(true);
                   }
 
@@ -259,7 +260,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
       forceHidden: userSettings.hiddenVotes,
     });
   }, [sendJsonMessage, me, gameId, userSettings.hiddenVotes]);
-  
+
   const question = useSelector(state => state.dialogue.question);
   const response = useSelector(state => state.dialogue.response);
 
@@ -273,7 +274,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
       });
       dispatch(clearQuestion());
     }
-  }, [question, response, dispatch, sendJsonMessage]);
+  }, [question, response, dispatch, sendJsonMessage, me, gameId]);
 
   return (
     <ul>
@@ -322,7 +323,7 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
         onClick={() => {
           dispatch(setNight(!isNight));
 
-          if(isNight === false) {
+          if (isNight === false) {
             dispatch(incrementDay());
           }
 
@@ -367,6 +368,16 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
         }}
       >
         Send Custom Alert
+      </li>
+      <li
+        onClick={() => {
+          dispatch(setMenu({
+            menu: 'gameEnd',
+            target: -1,
+          }));
+        }}
+      >
+        Call Game End
       </li>
     </ul>
   );
@@ -414,7 +425,7 @@ function SetupMenu({ me, gameId, sendJsonMessage }) {
             myId: me,
             gameId: gameId,
             sendRolesToPlayers: true,
-          })
+          });
         }}
       >
         Send out current roles to players.

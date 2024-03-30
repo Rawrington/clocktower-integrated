@@ -623,6 +623,8 @@
 
   animation-name: game-end-display;
   animation-duration: 8s;
+
+  user-select: none;
 }
 
 @keyframes game-end-display {
