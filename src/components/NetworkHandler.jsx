@@ -144,7 +144,10 @@ function NetworkHandler() {
     }
 
     if (lastJsonMessage.type === 'setNomination') {
-      dispatch(setNomination(lastJsonMessage.nomination));
+      dispatch(setNomination({
+        ...lastJsonMessage.nomination,
+        nominating: false,
+      }));
     }
 
     if (lastJsonMessage.type === 'setTimer') {
@@ -177,7 +180,9 @@ function NetworkHandler() {
 
       dispatch(clearHands());
 
-      dispatch(setMarked(lastJsonMessage.mark));
+      if (lastJsonMessage.mark) {
+        dispatch(setMarked(lastJsonMessage.mark));
+      }
     }
 
     if (lastJsonMessage.type === 'clearMarked') {
