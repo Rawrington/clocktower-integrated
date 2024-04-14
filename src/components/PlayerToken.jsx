@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, forwardRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import useWebSocket from 'react-use-websocket';
 import useResizeObserver from '@react-hook/resize-observer';
 
 import SOCKET_URL from '../socket_config.js';
@@ -11,8 +11,9 @@ import { faEllipsisVertical, faCheckToSlot, faHand, faX, faHandPointUp, faSkull,
 import { updatePlayer } from '../store/slices/players';
 import { setMenu } from '../store/slices/menu';
 import { setNomination } from '../store/slices/nomination';
+import { setQuestion, clearQuestion } from '../store/slices/dialogue';
 
-import { getBox, getRole } from '../genericFunctions';
+import { getRole } from '../genericFunctions';
 
 import Token from './token';
 
@@ -22,11 +23,9 @@ import shroud from '../assets/shroud.png';
 
 import '../css/PlayerToken.css';
 
-import standardRoles from '../roles.json';
-
 const resizeEvents = [
   'updatePlayerList',
-]
+];
 
 // write this here because its a mess and i want to easily update it as needed
 function selectPlayerById(state, id, storyteller) {
@@ -46,6 +45,11 @@ function selectPlayerById(state, id, storyteller) {
   }).find((player) => player.id === id);
 }
 
+function getQuestionForSelector(id) {
+  return 
+  
+}
+
 // if you are reading this i am so sorry, SO SO SORRY, I spilled my spaghetti all over the inline styles
 const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const player = useSelector(state => selectPlayerById(state, id, storyteller), shallowEqual);
@@ -53,6 +57,8 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const nomination = useSelector(state => state.nomination);
   const me = useSelector(state => state.me);
   const gameId = useSelector(state => state.game);
+
+  const response = useSelector(state => (state.dialogue.question === 'Enter a new name for ' + state.players.find((player) => player.id === id).name + ':' && state.dialogue.response) ? state.dialogue.response : false);
 
   function handleResize(node) {
     const { x, y, width, height } = node.getBoundingClientRect();
@@ -82,8 +88,9 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
           return false;
         }
 
-        if (typeof json !== 'object')
+        if (typeof json !== 'object') {
           return false;
+        }
 
         if (resizeEvents.includes(json.type)) {
           setTimeout(() => {
@@ -102,6 +109,7 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const dispatch = useDispatch();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [renaming, setRenaming] = useState(false);
 
   const playerRef = useRef(null);
 
@@ -137,14 +145,30 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
     if (playerRef && playerRef.current && playerRef.current.getBoundingClientRect) {
       handleResize(playerRef.current);
     }
-  }, [playerRef, playerRef.current])
+  }, [playerRef, playerRef.current, handleResize]);
+
+  useEffect(() => {
+    if (response && renaming && privilegeLevel == 1) {
+      sendJsonMessage({
+        type: 'updatePlayer',
+        myId: me,
+        gameId: gameId,
+        player: {
+          id: player.id,
+          name: response,
+        },
+      });
+
+      dispatch(clearQuestion());
+    }
+  }, [player.id, response, renaming, dispatch, sendJsonMessage, me, gameId, privilegeLevel]);
 
   return (
     <>
       <li style={style}>
         <div
           className="player"
-          style={{ 
+          style={{
             transform: 'rotate(' + -rotation + 'deg)',
           }}
         >
@@ -180,6 +204,14 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
                       }}
                     >Nominate</li>
                   }
+                  <li
+                    onClick={() => {
+                      setMenuOpen(menuOpen => !menuOpen);
+                      setRenaming(true);
+
+                      dispatch(setQuestion('Enter a new name for ' + player.name + ':'));
+                    }}
+                  >Rename Player</li>
                   <li
                     onClick={() => {
                       setMenuOpen(menuOpen => !menuOpen);

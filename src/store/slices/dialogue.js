@@ -10,9 +10,10 @@ export const dialogueSlice = createSlice({
   initialState,
   reducers: {
     setQuestion: (state, action) => {
+      state.response = false;
       state.question = action.payload;
     },
-    setResponse: (state, action) => {
+    setResponse: (state, action) => {false;
       state.response = action.payload;
     },
     clearQuestion: () => {
