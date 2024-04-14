@@ -160,6 +160,8 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
       });
 
       dispatch(clearQuestion());
+
+      setRenaming(false);
     }
   }, [player.id, response, renaming, dispatch, sendJsonMessage, me, gameId, privilegeLevel]);
 
