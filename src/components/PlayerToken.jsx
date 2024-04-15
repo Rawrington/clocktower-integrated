@@ -41,6 +41,7 @@ function selectPlayerById(state, id, storyteller) {
       handUp: player.handUp,
       voteLocked: player.voteLocked,
       marked: player.marked,
+      pronouns: player.pronouns,
     };
   }).find((player) => player.id === id);
 }
@@ -58,7 +59,12 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const me = useSelector(state => state.me);
   const gameId = useSelector(state => state.game);
 
-  const response = useSelector(state => (state.dialogue.question === 'Enter a new name for ' + state.players.find((player) => player.id === id).name + ':' && state.dialogue.response) ? state.dialogue.response : false);
+  const response = useSelector(state => (
+    (
+      state.dialogue.question === 'Enter a new name for ' + state.players.find((player) => player.id === id).name + ':' ||
+      state.dialogue.question === 'Enter pronouns for ' + state.players.find((player) => player.id === id).name + ':'
+    )
+    && state.dialogue.response) ? state.dialogue.response : false);
 
   function handleResize(node) {
     const { x, y, width, height } = node.getBoundingClientRect();
@@ -109,7 +115,7 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const dispatch = useDispatch();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [renaming, setRenaming] = useState(false);
+  const [currentInput, setCurrentInput] = useState(false);
 
   const playerRef = useRef(null);
 
@@ -124,7 +130,7 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   const zIndex = zswap ? order + 2 : 2 + sizing - order;
 
   const style = {
-    transform: 'rotate(' + rotation + 'deg) translateY(-38vmin)',
+    transform: 'rotate(' + rotation + 'deg) translateY(-36vmin)',
     width: '14vmin',
     height: '14vmin',
     zIndex: zIndex,
@@ -148,22 +154,33 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
   }, [playerRef, playerRef.current, handleResize]);
 
   useEffect(() => {
-    if (response && renaming && privilegeLevel == 1) {
-      sendJsonMessage({
-        type: 'updatePlayer',
-        myId: me,
-        gameId: gameId,
-        player: {
-          id: player.id,
-          name: response,
-        },
-      });
+    if (response) {
+      if(currentInput === 'rename' && privilegeLevel == 1) {
+        sendJsonMessage({
+          type: 'updatePlayer',
+          myId: me,
+          gameId: gameId,
+          player: {
+            id: player.id,
+            name: response,
+          },
+        });
+      }
+      else if(currentInput === 'pronoun' && (me === player.id || privilegeLevel == 1)) {
+        sendJsonMessage({
+          type: 'setPronouns',
+          myId: me,
+          gameId: gameId,
+          playerId: player.id,
+          pronouns: response,
+        });
+      }
 
       dispatch(clearQuestion());
 
-      setRenaming(false);
+      setCurrentInput(false);
     }
-  }, [player.id, response, renaming, dispatch, sendJsonMessage, me, gameId, privilegeLevel]);
+  }, [player.id, response, currentInput, dispatch, sendJsonMessage, me, gameId, privilegeLevel]);
 
   return (
     <>
@@ -182,20 +199,23 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
               setMenuOpen(!menuOpen);
             }}
             style = {{
-              pointerEvents: (nomination.nominating || privilegeLevel == 0) && 'none',
+              pointerEvents: nomination.nominating || (me !== player.id && privilegeLevel < 1) && 'none',
               zIndex: zIndex+2,
             }}
           >
-            <span>{ player.name }</span>
+            <div>
+              <span>{ player.name }</span>
+              <span className="pronouns">{ player.pronouns }</span>
+            </div>
             <FontAwesomeIcon icon={faEllipsisVertical} style={{
               color: '#ffffff',
               position: 'absolute',
               right: 10,
             }} />
-            {menuOpen && privilegeLevel == 1 &&
+            {menuOpen &&
               <div className="player-menu">
                 <ul>
-                  {nomination.open &&
+                  {nomination.open && privilegeLevel == 1 &&
                     <li
                       onClick={() => {
                         setMenuOpen(menuOpen => !menuOpen);
@@ -206,26 +226,46 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
                       }}
                     >Nominate</li>
                   }
-                  <li
-                    onClick={() => {
-                      setMenuOpen(menuOpen => !menuOpen);
-                      setRenaming(true);
+                  {(me === player.id || privilegeLevel == 1) &&
+                    <li
+                      onClick={() => {
+                        setMenuOpen(menuOpen => !menuOpen);
+                        setCurrentInput('pronoun');
 
-                      dispatch(setQuestion('Enter a new name for ' + player.name + ':'));
-                    }}
-                  >Rename Player</li>
-                  <li
-                    onClick={() => {
-                      setMenuOpen(menuOpen => !menuOpen);
+                        dispatch(setQuestion({
+                          question: 'Enter pronouns for ' + player.name + ':',
+                          default: player.pronouns
+                        }));
+                      }}
+                    >Set Pronouns</li>
+                  }
+                  {privilegeLevel == 1 &&
+                    <>
+                      <li
+                        onClick={() => {
+                          setMenuOpen(menuOpen => !menuOpen);
+                          setCurrentInput('rename');
 
-                      sendJsonMessage({
-                        type: 'removePlayer',
-                        myId: me,
-                        gameId: gameId,
-                        player: player.id,
-                      });
-                    }}
-                  >Remove Player</li>
+                          dispatch(setQuestion({
+                            question: 'Enter a new name for ' + player.name + ':',
+                            default: player.name
+                          }));
+                        }}
+                      >Rename Player</li>
+                      <li
+                        onClick={() => {
+                          setMenuOpen(menuOpen => !menuOpen);
+
+                          sendJsonMessage({
+                            type: 'removePlayer',
+                            myId: me,
+                            gameId: gameId,
+                            player: player.id,
+                         });
+                        }}
+                      >Remove Player</li>
+                    </>
+                  }
                 </ul>
               </div>
             }

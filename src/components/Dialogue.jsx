@@ -9,9 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 function Dialogue() {
-  const {question, response} = useSelector(state => state.dialogue);
+  const {question, response, defaulted} = useSelector(state => state.dialogue);
 
   const [inputAnswer, setInputAnswer] = useState('');
+  const [firstOpened, setFirstOpened] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -19,7 +20,11 @@ function Dialogue() {
     return null;
   }
 
+
+
   function updateAnswer(event) {
+    setFirstOpened(false);
+
     if(event.target.value.length > 512) {
       setInputAnswer(inputAnswer);
       return
@@ -35,6 +40,8 @@ function Dialogue() {
           className="global-menu-x"
           onClick={() => {
             dispatch(clearQuestion());
+            setInputAnswer('');
+            setFirstOpened(true);
           }}
         >
           <FontAwesomeIcon icon={faX} />
@@ -44,7 +51,7 @@ function Dialogue() {
           <input
             type="text"
             name="answerr"
-            value={inputAnswer}
+            value={(firstOpened && defaulted) ? defaulted : inputAnswer}
             onChange={updateAnswer}
             maxLength="512"
             autoComplete="off"
@@ -57,6 +64,7 @@ function Dialogue() {
                   dispatch(setResponse(inputAnswer));
                 }
                 setInputAnswer('');
+                setFirstOpened(true);
               }}
             >
               Ok
@@ -65,6 +73,8 @@ function Dialogue() {
               className="button"
               onClick={() => {
                 dispatch(clearQuestion());
+                setInputAnswer('');
+                setFirstOpened(true);
               }}
             >
               Cancel

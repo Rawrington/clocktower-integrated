@@ -231,7 +231,10 @@ function AddNote({ target, edition }) {
           style={{ backgroundImage: 'url(' + noteBackground + ')' }}
           className="note-option"
           onClick={() => {
-            dispatch(setQuestion('Enter a custom note:'));
+            dispatch(setQuestion({
+              question: 'Enter a custom note:',
+              default: ''
+            }));
           }}>
           <div
             className="note-reminder"
@@ -1324,7 +1327,10 @@ function CustomEdition() {
           <div
             className="button"
             onClick={() => {
-              dispatch(setQuestion('Enter URL to a custom-script.json file'));
+              dispatch(setQuestion({
+                question: 'Enter URL to a custom-script.json file',
+                default: ''
+              }));
             }}
           >
             Enter URL

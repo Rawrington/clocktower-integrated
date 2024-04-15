@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   question: false,
   response: false,
+  defaulted: false,
 };
 
 export const dialogueSlice = createSlice({
@@ -11,7 +12,8 @@ export const dialogueSlice = createSlice({
   reducers: {
     setQuestion: (state, action) => {
       state.response = false;
-      state.question = action.payload;
+      state.question = action.payload.question;
+      state.defaulted = action.payload.default;
     },
     setResponse: (state, action) => {false;
       state.response = action.payload;

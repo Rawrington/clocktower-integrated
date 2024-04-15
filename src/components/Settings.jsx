@@ -364,7 +364,10 @@ function GameMenu({ userSettings, isNight, me, gameId, sendJsonMessage }) {
       </li>
       <li
         onClick={() => {
-          dispatch(setQuestion("Enter your custom alert."));
+          dispatch(setQuestion({
+            question: 'Enter your custom alert.',
+            default: ''
+          }));
         }}
       >
         Send Custom Alert

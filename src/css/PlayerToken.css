@@ -233,27 +233,37 @@
   user-select: none;
   pointer-events: auto;
   cursor: pointer;
-  text-overflow: ellipsis;
   position: absolute;
   width: inherit;
   box-sizing: border-box;
-  max-height: 2em;
 }
 
 .player > .top-label {
-  top: -2em;
+  top: -.1em;
+  transform: translateY(-100%);
 }
 
 .player > .bottom-label {
-  bottom: -2em;
+  bottom: .1em;
+  transform: translateY(100%);
+}
+
+.player > .label div {
+  float: left;
 }
 
 .player > .label span {
-  float: left;
+  text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 1em;
   word-break: break-all;
+  max-height: 1em;
+  display: block;
+}
+
+.player > .label .pronouns {
+  font-style: italic;
+  font-size: 12px;
 }
 
 .player .svg-overlay {
@@ -309,11 +319,11 @@
 }
 
 .top-label > .player-menu {
-  top: 2em;
+  top: 102%;
 }
 
 .bottom-label > .player-menu {
-  bottom: 2em;
+  bottom: 102%;
 }
 
 .label > .player-menu ul {
