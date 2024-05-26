@@ -1411,5 +1411,22 @@
     "name": "Summoner",
     "team": "minion",
     "ability": "You get 3 bluffs. On the 3rd night, choose a player: they become an evil Demon of your choice. [No Demon]"
+  },
+  {
+    "id": "banshee",
+    "otherNight": 42.1,
+    "otherNightReminder": "Announce that the Banshee has died.",
+    "reminders": ["Has Ability"],
+    "name": "Banshee",
+    "team": "townsfolk",
+    "ability": "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination."
+  },
+  {
+    "id": "ogre",
+    "firstNight": 49.1,
+    "firstNightReminder": "The Ogre points to a player (not themselves) and becomes their alignment.",
+    "name": "Ogre",
+    "team": "outsider",
+    "ability": "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned."
   }
 ]

@@ -12,7 +12,7 @@ import { closeMenu } from '../store/slices/menu';
 import { setNomination, setTransition, setHand } from '../store/slices/nomination';
 import { setNight } from '../store/slices/night';
 import { setTimer } from '../store/slices/timer';
-import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber, setGameEndText } from '../store/slices/others';
+import { setFabled, setVotingHistory, setAlert, setVoiceMembers, clearStorytellerGrim, setStorytellerGrim, showStorytellerGrim, setDayNumber, setGameEndText, setActiveSpecials } from '../store/slices/others';
 import { clearNotes } from '../store/slices/notes';
 
 import { getEdition, clearCache } from '../genericFunctions';
@@ -42,6 +42,7 @@ const whitelist = [
   'storytellerGrim',
   'timerEnd',
   'setGameEnd',
+  'setActiveSpecials',
 ];
 
 const events = ['mousedown', 'touchstart'];
@@ -107,6 +108,7 @@ function NetworkHandler() {
       dispatch(setGameId(lastJsonMessage.gameId));
       dispatch(setVotingHistory(lastJsonMessage.votingHistory));
       dispatch(setDayNumber(lastJsonMessage.dayNumber));
+      dispatch(setActiveSpecials(lastJsonMessage.activeSpecials));
 
       if (typeof lastJsonMessage.edition === 'object') {
         getEdition(lastJsonMessage.edition);
@@ -261,6 +263,10 @@ function NetworkHandler() {
           countdown: true,
         }));
       });
+    }
+
+    if (lastJsonMessage.type === 'setActiveSpecials') {
+      dispatch(setActiveSpecials(lastJsonMessage.activeSpecials));
     }
   });
 

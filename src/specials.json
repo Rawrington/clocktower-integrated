@@ -30,5 +30,10 @@
     "role": "villageidiot",
     "type": "selection",
     "name": "bag-duplicate"
+  },
+  {
+    "role": "banshee",
+    "type": "vote",
+    "name": "doublevote"
   }
 ]

@@ -290,9 +290,31 @@
 
   opacity: 0;
 
-  transition: opacity 0.2s;
+  transition: opacity 0.3s,
+    width 0.2s,
+    height 0.2s;
 
   pointer-events: none;
+}
+
+
+.player .svg-overlay .left-hand {
+  width: 50%;
+  height: 50%;
+
+  top: 20%;
+  left: 0;
+}
+
+.player .svg-overlay .right-hand {
+  width: 50%;
+  height: 50%;
+
+  top: 20%;
+  left: auto;
+  right: 0;
+
+  transform: scaleX(-1);
 }
 
 .player .svg-overlay .hand-up {

@@ -201,6 +201,7 @@ function AddNote({ target, edition }) {
       ...note,
       position: pos,
       id: note.reminder + '_' + nanoid(),
+      reminder: note.reminder,
       globalIndex: getGlobalReminders(edition).findIndex(reminder => reminder.text === note.text && reminder.reminder === note.reminder),
     }));
     // by giving our note a unique indentifier we force less DOM updates to happen, I think, idk React cool im bad....

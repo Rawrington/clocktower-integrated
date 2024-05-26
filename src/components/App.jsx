@@ -23,7 +23,7 @@ import '../css/App.css';
 
 import bigX from '../assets/x.png';
 
-import { getRole, getFabled } from '../genericFunctions';
+import { getRole, getFabled, getActiveSpecials } from '../genericFunctions';
 
 import { selectPlayerList } from '../store/slices/players';
 import { selectNotesList } from '../store/slices/notes';
@@ -70,9 +70,83 @@ function App() {
 
 // small containers to seperate out selector logic - more efficient rerendering!
 const NoteList = forwardRef((props, ref) => {
-  const noteList = useSelector(selectNotesList, shallowEqual);
+  const noteList = useSelector(state => state.notes);
+  const players = useSelector(state => state.players);
+  const privilegeLevel = useSelector(state => state.privilege);
   const stGrim = useSelector(state => state.others.st);
   const showStGrim = useSelector(state => state.others.stshow);
+  const me = useSelector(state => state.me);
+  const gameId = useSelector(state => state.game);
+
+  const [lastSpecials, setLastSpecials] = useState({})
+
+  const { sendJsonMessage } = useWebSocket(
+    SOCKET_URL,
+    {
+      filter: () => {
+        return false; //we do not care about ANY incoming messages we need to send them!
+      },
+      share: true,
+    }
+  );
+
+  useEffect(() => {
+    if (privilegeLevel > 0) {
+      const mappedNotes = noteList.map((note) => {
+        let playerId = -1;
+        let closestDistance = -1;
+
+        for (const player of players) {
+          const distSqr = ((player.x - note.position.x) * (player.x - note.position.x)) + ((player.y - note.position.y) * (player.y - note.position.y));
+
+          if (closestDistance == -1 || distSqr < closestDistance) {
+            playerId = player.id;
+            closestDistance = distSqr;
+          }
+        }
+
+        return {
+          ...note,
+          player: playerId,
+        }
+      });
+
+      //I HATE THIS CODE BUT I DONT WANT TO SPAM THE SERVER, tldr only inform the server if our list of active specials changed
+
+      const previous = {...lastSpecials};
+
+      let change = false;
+
+      players.forEach((player) => {
+        const activeSpecials = [...new Set(mappedNotes.filter(
+          note => note.player === player.id && getActiveSpecials(player.role, note.reminder).length > 0
+        ))].reduce((accumulator, currentValue) => {
+          const specials = getActiveSpecials(player.role, currentValue.reminder);
+
+          return accumulator.concat(specials.map(special => special.name));
+        }, []);
+
+        if((!previous[player.id] && activeSpecials.length > 0) 
+          || (previous[player.id] && (!previous[player.id].every(item => activeSpecials.includes(item)) || !activeSpecials.every(item => previous[player.id].includes(item))))) {
+          sendJsonMessage({
+            type: 'setActiveSpecials',
+            myId: me,
+            gameId: gameId,
+            player: player.id,
+            activeSpecials: activeSpecials,
+          });
+
+          change = true;
+        }
+
+        previous[player.id] = activeSpecials;
+      });
+
+      if (change) {
+        setLastSpecials(previous);
+      }
+    }
+  }, [noteList, players, privilegeLevel, lastSpecials])
 
   return (
     <>
@@ -88,8 +162,8 @@ const NoteList = forwardRef((props, ref) => {
       ) : (
         noteList.map((note) => (
           <DraggableNote
-            key={note}
-            id={note}
+            key={note.id}
+            id={note.id}
             ref={ref}
           />
         ))

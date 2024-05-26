@@ -7,6 +7,7 @@ import SOCKET_URL from '../socket_config.js';
 import '../css/NominationDisplay.css';
 
 import { updatePlayer, selectAliveCounter } from '../store/slices/players';
+import { setActiveSpecials } from '../store/slices/others';
 
 import smallHand from '../assets/clock-small.png';
 import bigHand from '../assets/clock-big.png';
@@ -37,9 +38,14 @@ function NominationDisplay() {
   const me = useSelector(state => state.me);
   const myHand = useSelector(state => getMyHand(state, me));
   const canVote = useSelector(state => canDoVote(state, me));
-  const currentVotes = useSelector(state => state.players.filter(player => player.handUp).length);
+  const currentVotes = useSelector(state => state.players.reduce((accumulator, currentValue) => currentValue.handUp ? accumulator + Number(currentValue.handUp) : accumulator, 0));
   const gameId = useSelector(state => state.game);
   const userSettings = useSelector(state => state.settings);
+  const activeSpecials = useSelector(state => state.others.activeSpecials);
+
+  const [previousSpecials, setPreviousSpecials] = useState([]);
+  const [leftHandUp, setLeftHandUp] = useState(false);
+  const [rightHandUp, setRightHandUp] = useState(false);
 
   const { lastJsonMessage, readyState, sendJsonMessage } = useWebSocket(
     SOCKET_URL,
@@ -65,6 +71,31 @@ function NominationDisplay() {
       share: true,
     }
   );
+
+  useEffect(() => {
+    if(previousSpecials.includes('doublevote') && !activeSpecials.includes('doublevote') && canVote) {
+      dispatch(updatePlayer({
+        id: me,
+        handUp: !!myHand, 
+      }));
+      sendJsonMessage({
+        type: 'updateHand',
+        myId: me,
+        gameId: gameId,
+        hand: !!myHand,
+      });
+    }
+    else if(activeSpecials.includes('doublevote') && !previousSpecials.includes('doublevote')) {
+      setLeftHandUp(!!myHand);
+      setRightHandUp(false);
+    }
+
+    if((!previousSpecials && activeSpecials.length > 0) 
+      || (previousSpecials && (!previousSpecials.every(item => activeSpecials.includes(item)) || !activeSpecials.every(item => previousSpecials.includes(item))))) {
+      setPreviousSpecials(activeSpecials);
+    }
+
+  }, [previousSpecials, activeSpecials, canVote])
 
   if(readyState === ReadyState.OPEN && lastJsonMessage && lastJsonMessage.type && lastJsonMessage.type === 'requestFinalVote') {
     sendJsonMessage({
@@ -195,27 +226,74 @@ function NominationDisplay() {
                   </div>
                 )}
               </>
-            ) : (
-              <div
-                className={canVote ? 'button' : 'button locked'}
-                onClick={() => {
-                  if(canVote) {
-                    dispatch(updatePlayer({
-                      id: me,
-                      handUp: !myHand, 
-                    }));
-                    sendJsonMessage({
-                      type: 'updateHand',
-                      myId: me,
-                      gameId: gameId,
-                      hand: !myHand,
-                    });
-                  }
-                }}
-              >
-                { myHand ? 'Hand Down' : 'Hand Up' }
-              </div>
-            )}
+            ) : activeSpecials && activeSpecials.includes('doublevote') ? (
+                <>
+                  <div
+                    className={canVote ? 'button' : 'button locked'}
+                    onClick={() => {
+                      if(canVote) {
+                        dispatch(updatePlayer({
+                          id: me,
+                          handUp: !leftHandUp + rightHandUp,
+                        }));
+                        sendJsonMessage({
+                          type: 'updateHand',
+                          myId: me,
+                          gameId: gameId,
+                          hand: !leftHandUp + rightHandUp,
+                        });
+
+                        setLeftHandUp(!leftHandUp);
+                      }
+                    }}
+                  >
+                    { leftHandUp ? 'Left Hand Down' : 'Left Hand Up' }
+                  </div>
+                  <div
+                    className={canVote ? 'button' : 'button locked'}
+                    onClick={() => {
+                      if(canVote) {
+
+                        dispatch(updatePlayer({
+                          id: me,
+                          handUp: leftHandUp + !rightHandUp, 
+                        }));
+                        sendJsonMessage({
+                          type: 'updateHand',
+                          myId: me,
+                          gameId: gameId,
+                          hand: leftHandUp + !rightHandUp,
+                        });
+
+                        setRightHandUp(!rightHandUp);
+                      }
+                    }}
+                  >
+                    { rightHandUp ? 'Right Hand Down' : 'Right Hand Up' }
+                  </div>
+                </>
+              ) : ( 
+                <div
+                  className={canVote ? 'button' : 'button locked'}
+                  onClick={() => {
+                    if(canVote) {
+                      dispatch(updatePlayer({
+                        id: me,
+                        handUp: !myHand, 
+                      }));
+                      sendJsonMessage({
+                        type: 'updateHand',
+                        myId: me,
+                        gameId: gameId,
+                        hand: !myHand,
+                      });
+                    }
+                  }}
+                >
+                  { myHand ? 'Hand Down' : 'Hand Up' }
+                </div>
+              )
+            }
           </div>
         </div>
       </div>

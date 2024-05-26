@@ -391,22 +391,43 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
               {!isNaN(nomination.nominated.index) && 
                 <>
                   <FontAwesomeIcon
-                    className={player.handUp ? 'hand-up' : ''}
+                    className={player.handUp ? (player.handUp === 2 ? 'hand-up left-hand' : 'hand-up') : ''}
                     style={{
-                      opacity: player.handUp && player.voteLocked && 1,
+                      opacity: player.handUp && (player.voteLocked || player.voteLocked === 0) && 0,
                       color: '#ce0100',
                     }}
                     icon={faHand}
                     viewBox="0 0 448 512"
                   />
                   <FontAwesomeIcon
+                    className={player.handUp === 2 ? 'hand-up right-hand' : ''}
                     style={{
-                      opacity: !player.handUp && player.voteLocked && 1,
-                      color: '#1f65ff',
+                      opacity: player.handUp === 2 && (player.voteLocked || player.voteLocked === 0) && 0,
+                      color: '#ce0100',
                     }}
-                    icon={faX}
-                    viewBox="0 0 352 512"
+                    icon={faHand}
+                    viewBox="0 0 448 512"
                   />
+                  <svg
+                    viewBox="0 0 512 512"
+                    className="vote-count"
+                    style={{
+                      opacity: (player.voteLocked || player.voteLocked === 0) && 1,
+                      color: '#ce0100',
+                    }}
+                  >
+                    <text
+                      x="55%"
+                      y="60%"
+                      fill="currentColor"
+                      dominantBaseline="middle"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: '500px',
+                        fontWeight: 'bold',
+                      }}
+                    >{player.voteLocked}</text>
+                  </svg>
                 </>
               }
               <FontAwesomeIcon

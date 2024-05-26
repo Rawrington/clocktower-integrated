@@ -302,6 +302,23 @@ export function getReminders(roles, fabled) {
   return reminders;
 }
 
+// allowed active specials
+const activeSpecials = [
+  {
+    type: 'vote',
+    name: 'doublevote',
+    matchrole: true,
+  },
+]
+
+export function getActiveSpecials(role, reminder) {
+  return specials.find(special => special.role === reminder) ? specials.filter(
+    special => special.role === reminder && activeSpecials.some(as => as.type === special.type && as.name === special.name && (!as.matchrole || reminder === role))
+  ) : cachedSpecials.filter(
+    special => special.role === reminder && activeSpecials.some(as => as.type === special.type && as.name === special.name && (!as.matchrole || reminder === role))
+  );
+}
+
 // thank you random javascript website for this example very useful!
 export function getBox(box) {
   const ret = {};
