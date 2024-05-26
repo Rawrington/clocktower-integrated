@@ -25,7 +25,7 @@ function getMyHand(state, me) {
 function canDoVote(state, me) {
   const player = state.players.find(player => player.id === me);
 
-  return (player && !player.voteLocked && (!player.dead || !player.usedGhostVote));
+  return (player && !player.voteLocked && player.voteLocked !== 0 && (!player.dead || !player.usedGhostVote));
 }
 
 const getRotation = (index, sizing) => (0 + (360 / sizing) * (index));
