@@ -13,7 +13,7 @@ fs.readFile(filename, 'utf8', function(err, data) {
   const jinxes = JSON.parse(data).map(jinx => {
     return {
         id: jinx.id.replace(/[^A-Z]/ig, '').toLowerCase(),
-        jinxes: jinx.hatred.map(hate => {
+        jinxes: jinx.jinx.map(hate => {
              return {
                 id: hate.id.replace(/[^A-Z]/ig, '').toLowerCase(),
                 reason: hate.reason,

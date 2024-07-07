@@ -127,7 +127,13 @@ const NoteList = forwardRef((props, ref) => {
         }, []);
 
         if((!previous[player.id] && activeSpecials.length > 0) 
-          || (previous[player.id] && (!previous[player.id].every(item => activeSpecials.includes(item)) || !activeSpecials.every(item => previous[player.id].includes(item))))) {
+          || (previous[player.id]
+            && (
+              !previous[player.id].every(item => activeSpecials.includes(item))
+              || !activeSpecials.every(item => previous[player.id].includes(item))
+            )
+          )
+        ) {
           sendJsonMessage({
             type: 'setActiveSpecials',
             myId: me,

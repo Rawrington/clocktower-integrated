@@ -1428,5 +1428,11 @@
     "name": "Ogre",
     "team": "outsider",
     "ability": "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned."
+  },
+  {
+    "id": "alsaahir",
+    "name": "Alsaahir",
+    "team": "townsfolk",
+    "ability": "Once per day, if you publicly guess which players are Minion(s) and which are Demon(s), good wins."
   }
 ]
