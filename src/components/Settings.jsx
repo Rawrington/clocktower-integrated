@@ -447,6 +447,17 @@ function SetupMenu({ me, gameId, sendJsonMessage }) {
       <li
         onClick={() => {
           sendJsonMessage({
+            type: 'shuffleSeats',
+            myId: me,
+            gameId: gameId,
+          });
+        }}
+      >
+        Shuffle Seats
+      </li>
+      <li
+        onClick={() => {
+          sendJsonMessage({
             type: 'resetGame',
             myId: me,
             gameId: gameId,

@@ -20,7 +20,7 @@ import { setPlayers } from './slices/players';
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
+  storage: storage.default ?? storage,
   blacklist: ['dialogue', 'edition', 'me', 'menu', 'nomination', 'privilege', 'settings', 'timer'] //get rekt losers
 };
 

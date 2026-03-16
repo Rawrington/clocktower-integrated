@@ -42,6 +42,7 @@ function selectPlayerById(state, id, storyteller) {
       voteLocked: player.voteLocked,
       marked: player.marked,
       pronouns: player.pronouns,
+      avatarURL: player.avatarURL,
     };
   }).find((player) => player.id === id);
 }
@@ -321,6 +322,15 @@ const PlayerToken = forwardRef(({ order, id, sizing, storyteller }, ref) => {
                       },
                     });
                   }
+                }}
+              ></div>
+            }
+            {player.avatarURL && 
+              <div
+                className="discord-pfp"
+                style={{
+                  backgroundImage: 'url("' + player.avatarURL + '")' ,
+                  zIndex: zIndex+1,
                 }}
               ></div>
             }

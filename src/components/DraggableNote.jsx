@@ -16,7 +16,9 @@ import standardRoles from '../roles.json';
 
 import { getImage } from '../genericFunctions';
 
-import LeaderLine from 'leader-line'
+//import * as LeaderLine from 'leader-line'
+
+console.log(LeaderLine);
 
 // praise your local divine authority for publicly available resources!
 import Draggable from 'react-draggable';
@@ -25,15 +27,14 @@ function getNoteById(state, id, storyteller) {
   if (storyteller) {
     return state.others.st.notes.find((note) => note.id === id);
   }
-  else
-  {
+  else {
     return state.notes.find((note) => note.id === id);
   }
 }
 
 const resizeEvents = [
   'updatePlayerList',
-]
+];
 
 const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
   const { reminder, text, position } = useSelector(state => getNoteById(state, id, storyteller));
@@ -192,7 +193,7 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
           y: curCenterY + ((((position.y + 3.25 * oldVminApprox) - dimensions.y) / oldVminApprox) * vminApprox) - 3.25 * vminApprox,
         }));
       }
-      
+
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
@@ -203,7 +204,7 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
       setResizing(true);
     }
 
-    if(!dimensions.x || !dimensions.y ) {
+    if (!dimensions.x || !dimensions.y) {
       const { x, y, width, height } = ref.current.getBoundingClientRect();
 
       const centerX = x + width / 2;
@@ -223,31 +224,35 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
 
     window.addEventListener('resize', handleResize);
 
-    return(() => {
+    return (() => {
       window.removeEventListener('resize', handleResize);
     });
-  }, [ref, ref.current, resizing, dimensions.x, dimensions.y, dimensions.width, dimensions.height, position.x, position.y, storyteller]);
+  }, [id, dispatch, ref, resizing, dimensions.x, dimensions.y, dimensions.width, dimensions.height, position.x, position.y, storyteller]);
 
   useEffect(() => {
-    if(noteRef.current && !lineRef.current) {
-      lineRef.current = new LeaderLine(LeaderLine.areaAnchor(noteRef.current, {x: 0, y: 0, width: '100%', height: '100%', shape: 'circle'}), LeaderLine.areaAnchor({x: 0, y: 0, width: 1, height: 1, shape: 'circle'}), {hide: true});
+    if (noteRef.current && !lineRef.current) {
+      lineRef.current = new LeaderLine(
+        LeaderLine.areaAnchor(noteRef.current, { x: 0, y: 0, width: '100%', height: '100%', shape: 'circle' }),
+        LeaderLine.areaAnchor({ x: 0, y: 0, width: 1, height: 1, shape: 'circle' }),
+        { hide: true }
+      );
     }
-  }, [noteRef, noteRef.current, lineRef, lineRef.current]);
+  }, [noteRef, lineRef]);
 
   useEffect(() => {
-    if(lineRef && lineRef.current && lineRef.current.end) {
-      lineRef.current.end = LeaderLine.areaAnchor({x: endPos.x, y: endPos.y, width: endPos.width, height: endPos.height, shape: 'circle'});
+    if (lineRef && lineRef.current && lineRef.current.end) {
+      lineRef.current.end = LeaderLine.areaAnchor({ x: endPos.x, y: endPos.y, width: endPos.width, height: endPos.height, shape: 'circle' });
     }
   }, [endPos]);
 
   useEffect(() => {
     return (() => {
-      if(lineRef.current && lineRef.current.remove) {
+      if (lineRef.current && lineRef.current.remove) {
         lineRef.current.remove();
         lineRef.current = null;
       }
     });
-  }, [])
+  }, []);
 
   // double check xd
 
@@ -258,9 +263,9 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
     } : position
   ) : null;
 
-  //if (storyteller && lineRef.current && lineRef.current.show) {
-  //  findClosestPlayer(position.x, position.y, storyteller);
-  //}
+  // if (storyteller && lineRef.current && lineRef.current.show) {
+  //   findClosestPlayer(position.x, position.y, storyteller);
+  // }
 
   return (
     <>
@@ -277,11 +282,11 @@ const DraggableNote = forwardRef(({ id, storyteller }, ref) => {
         <div
           ref={noteRef}
           className="note"
-          style={{ backgroundImage: 'url(' + noteBackground + ')'}}
+          style={{ backgroundImage: 'url(' + noteBackground + ')' }}
           onMouseEnter={() => {
             if (lineRef && lineRef.current && lineRef.current.show) {
               findClosestPlayer(position.x, position.y, storyteller);
-              lineRef.current.show('fade', {duration: 100, timing: 'linear'});
+              lineRef.current.show('fade', { duration: 100, timing: 'linear' });
             }
           }}
           onMouseLeave={() => {

@@ -941,16 +941,12 @@
     "name": "Balloonist",
     "team": "townsfolk",
     "firstNight": 45,
-    "firstNightReminder": "Choose a character type. Point to a player whose character is of that type. Place the Balloonist's Seen reminder next to that character.",
+    "firstNightReminder": "Choose a character type. Point to a player whose character is of that type. Place the Balloonist's 'Know' reminder next to that player.",
     "otherNight": 62,
-    "otherNightReminder": "Choose a character type that does not yet have a Seen reminder next to a character of that type. Point to a player whose character is of that type, if there are any. Place the Balloonist's Seen reminder next to that character.",
-    "reminders": ["Seen Townsfolk",
-        "Seen Outsider",
-        "Seen Minion",
-        "Seen Demon",
-        "Seen Traveller"],
+    "otherNightReminder": "Choose a player whose character type does not match the type from the previous night. Move the Balloonist's 'Know' reminder next to that player.",
+    "reminders": ["Know"],
     "setup": true,
-    "ability": "Each night, you learn 1 player of each character type, until there are no more types to learn. [+1 Outsider]"
+    "ability": "Each night, you learn a player of a different character type than last night. [+0 or +1 Outsider]"
   },
   {
     "id": "cultleader",
@@ -968,8 +964,9 @@
     "team": "townsfolk",
     "otherNight": 22,
     "otherNightReminder": "The Lycanthrope points to a living player: if good, they die and no one else can die tonight.",
-    "reminders": ["Dead"],
-    "ability": "Each night*, choose a living player: if good, they die, but they are the only player that can die tonight."
+    "reminders": ["Registers As Evil",
+      "Dead"],
+    "ability": "Each night*, choose an alive player: if good, they die & the Demon doesn't kill tonight. One good player registers as evil."
   },
   {
     "id": "amnesiac",
@@ -1028,9 +1025,9 @@
     "name": "Alchemist",
     "team": "townsfolk",
     "firstNight": 3,
-    "firstNightReminder": "Show the Alchemist a not-in-play Minion token",
+    "firstNightReminder": "Show the Alchemist the Minion token of the ability they have",
     "remindersGlobal": ["Is the Alchemist"],
-    "ability": "You have a not-in-play Minion ability."
+    "ability": "You have a Minion ability. When using this, the Storyteller may prompt you to choose differently."
   },
   {
     "id": "farmer",
@@ -1093,11 +1090,12 @@
   {
     "id": "acrobat",
     "name": "Acrobat",
-    "team": "outsider",
+    "team": "townsfolk",
     "otherNight": 39,
-    "otherNightReminder": "If a good living neighbour is drunk or poisoned, the Acrobat player dies.",
-    "reminders": ["Dead"],
-    "ability": "Each night*, if either good living neighbour is drunk or poisoned, you die."
+    "otherNightReminder": "The Acrobat points to a player. If that player is or becomes drunk or poisoned tonight, the Acrobat dies.",
+    "reminders": ["Chosen",
+      "Dead"],
+    "ability": "Each night*, choose a player: if they are or become drunk or poisoned tonight, you die."
   },
   {
     "id": "puzzlemaster",
@@ -1197,7 +1195,7 @@
     "id": "boomdandy",
     "name": "Boomdandy",
     "team": "minion",
-    "ability": "If you are executed, all but 3 players die. 1 minute later, the player with the most players pointing at them dies."
+    "ability": "If you are executed, all but 3 players die. After a 10 to 1 countdown, the player with the most players pointing at them, dies."
   },
   {
     "id": "lilmonsta",
@@ -1224,18 +1222,18 @@
     "otherNightReminder": "The Lleech points to a player. That player dies.",
     "reminders": ["Dead",
         "Poisoned"],
-    "ability": "Each night*, choose a player: they die. You start by choosing an alive player: they are poisoned - you die if & only if they die."
+    "ability": "Each night*, choose a player: they die. You start by choosing a player: they are poisoned. You die if & only if they are dead."
   },
   {
     "id": "alhadikhia",
     "name": "Al-Hadikhia",
     "team": "demon",
     "otherNight": 33,
-    "otherNightReminder": "The Al-Hadikhia chooses 3 players. Announce the first player, wake them to nod yes to live or shake head no to die, kill or resurrect accordingly, then put to sleep and announce the next player. If all 3 are alive after this, all 3 die.",
+    "otherNightReminder": "The Al-Hadikhia might choose 3 players. If so, announce the first player, wake them to nod yes to live or shake head no to die, kill or resurrect accordingly, then put to sleep and announce the next player. If all 3 are alive after this, all 3 die.",
     "reminders": ["1", "2", "3",
         "Chose death",
         "Chose life"],
-    "ability": "Each night*, choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die."
+    "ability": "Each night*, you may choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die."
   },
   {
     "id": "legion",
@@ -1269,8 +1267,15 @@
     "id": "riot",
     "name": "Riot",
     "team": "demon",
-    "setup": true,
-    "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]"
+    "otherNight": 72,
+    "reminders": [
+      "Night 1",
+      "Night 2",
+      "Night 3"
+    ],
+    "setup": false,
+    "otherNightReminder": "If it is the third night, wake each Minion. Show them the 'You are' card and the Riot character token.",
+    "ability": "On day 3, Minions become Riot & nominees die but nominate an alive player immediately. This must happen."
   },
   {
     "id": "gangster",
@@ -1282,8 +1287,8 @@
     "id": "organgrinder",
     "name": "Organ Grinder",
     "team": "minion",
-    "reminders": ["About To Die"],
-    "ability": "All players keep their eyes closed when voting & the vote tally is secret. Votes for you only count if you vote."
+    "reminders": ["Drunk"],
+    "ability": "All players keep their eyes closed when voting and the vote tally is secret. Each night, choose if you are drunk or not."
   },
   {
     "id": "vizier",
@@ -1330,14 +1335,14 @@
     "reminders": ["Mad", "2nd"],
     "name": "Harpy",
     "team": "minion",
-    "ability": "Each night, choose 2 players: tomorrow, the 1st player is mad that the 2nd is evil, or both might die."
+    "ability": "Each night, choose 2 players: tomorrow, the 1st player is mad that the 2nd is evil, or one or both might die."
   },
   {
     "id": "plaguedoctor",
     "reminders": ["Storyteller Ability"],
     "name": "Plague Doctor",
     "team": "outsider",
-    "ability": "If you die, the Storyteller gains a not-in-play Minion ability."
+    "ability": "If you die, the Storyteller gains a Minion ability."
   },
   {
     "id": "shugenja",
@@ -1427,6 +1432,9 @@
     "firstNightReminder": "The Ogre points to a player (not themselves) and becomes their alignment.",
     "name": "Ogre",
     "team": "outsider",
+    "reminders": [
+      "Friend"
+    ],
     "ability": "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned."
   },
   {
@@ -1434,5 +1442,60 @@
     "name": "Alsaahir",
     "team": "townsfolk",
     "ability": "Once per day, if you publicly guess which players are Minion(s) and which are Demon(s), good wins."
+  },
+  {
+    "id": "zealot",
+    "name": "Zealot",
+    "team": "outsider",
+    "ability": "If there are 5 or more players alive, you must vote for every nomination."
+  },
+  {
+    "id": "lordoftyphon",
+    "firstNight": 0.1,
+    "firstNightReminder": "Wake the players on either side of the Demon. Show them the 'You Are' card, the token of the Minion they now are, and a thumbs down to indicate they are evil.",
+    "otherNight": 31.1,
+    "otherNightReminder": "The Lord of Typhon points to a player. That player dies.",
+    "reminders": ["Dead"],
+    "setup": true,
+    "name": "Lord of Typhon",
+    "team": "demon",
+    "ability": "Each night*, choose a player: they die. [Evil characters are in a line. You are in the middle. +1 Minion. -? To +? Outsiders]"
+  },
+  {
+    "id": "boffin",
+    "firstNight": 0.3,
+    "firstNightReminder": "Wake the Boffin and how them the token of the ability the Demon has. Put the Boffin back to sleep. Wake the Demon, show the Boffin token, then show the token of the good ability the Demon has.",
+    "name": "Boffin",
+    "team": "minion",
+    "ability": "The Demon (even if drunk or poisoned) has a not-in-play good character’s ability. You both know which."
+  },
+  {
+    "id": "xaan",
+    "name": "Xaan",
+    "team": "minion",
+    "firstNight": 16.5,
+    "firstNightReminder": "Add the Xaan's 'Night 1' reminder to the Grimoire. If X is 1, add the 'X' reminder.",
+    "otherNight": 6.5,
+    "otherNightReminder": "Change the Xaan's night reminder to the relevant night. If tonight is night X, add the 'X' reminder.",
+    "reminders": [
+      "Night 1",
+      "Night 2",
+      "Night 3",
+      "X"
+    ],
+    "setup": true,
+    "ability": "On night X, all Townsfolk are poisoned until dusk. [X Outsiders]"
+  },
+  {
+    "id": "wizard",
+    "name": "Wizard",
+    "firstNight": 19.5,
+    "otherNight": 9.5,
+    "team": "minion",
+    "firstNightReminder": "If the Wizard's wish requires actions at night, run these.",
+    "otherNightReminder": "If the Wizard's wish requires actions at night, run these.",
+    "reminders": ["?","?"],
+    "setup": false,
+    "ability": "Once per game, choose to make a wish. If granted, it might have a price & leave a clue as to its nature."
   }
 ]

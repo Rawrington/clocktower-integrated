@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
@@ -11,6 +11,9 @@ const whitelist = [
   'authenticate',
 ]
 
+//this should update for every version, 
+const version = '0.5.1';
+
 // I honestly forgor that Maps were a thing its probably not a problem I hope!
 function AppNetworkGate({ children }) {
   const [ sentAuth, setSentAuth ] = useState(true);
@@ -18,6 +21,7 @@ function AppNetworkGate({ children }) {
   const [ canRetry, setCanRetry ] = useState(false);
   const lastMessageTime = useRef(-1);
   const timerRef = useRef(null);
+  const nodeRef = useRef(null);
 
   const { sendJsonMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(
     SOCKET_URL,
@@ -77,6 +81,28 @@ function AppNetworkGate({ children }) {
     }
   );
 
+  useEffect(() => {
+    const queryParameters = new URLSearchParams(window.location.search);
+
+    const token = queryParameters.get('token');
+
+    if (!nodeRef.current) {
+      nodeRef.current = document.createElement('iframe');
+      nodeRef.current.setAttribute('src', 'splatter://token/' + token);
+      nodeRef.current.style.width = '0';
+      nodeRef.current.style.height = '0';
+      nodeRef.current.style.display = 'none';
+      document.body.appendChild(nodeRef.current);
+    }
+
+    setTimeout(() => {
+      if (nodeRef.current) {
+        document.body.removeChild(nodeRef.current);
+        nodeRef.current = null;
+      }
+    }, 30000);
+  }, []);
+
   if(ReadyState.OPEN && !sentAuth) {
     const queryParameters = new URLSearchParams(window.location.search);
 
@@ -85,6 +111,7 @@ function AppNetworkGate({ children }) {
     sendJsonMessage({
       type: 'authenticate',
       token: token,
+      version: version,
       now: Date.now(),
     })
 
@@ -92,6 +119,14 @@ function AppNetworkGate({ children }) {
   }
 
   const dispatch = useDispatch();
+
+  if (lastJsonMessage && lastJsonMessage.error && lastJsonMessage.error === 'versionmismatch') {
+    return (
+      <div className="network-status">
+        Version Mismatch. Please reload or update your client.
+      </div>
+    );
+  }
 
   if (!lostConnection && ReadyState.OPEN && lastJsonMessage && lastJsonMessage.type === 'authenticate') {
     dispatch(setPrivilege(lastJsonMessage.privilege));
